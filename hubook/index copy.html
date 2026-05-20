@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>청도 지역혁신가 아카이브</title>
+<link rel="icon" type="image/png" href="cmz_logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 <style>
+/* ── 리셋 & 변수 ─────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -21,22 +23,24 @@
   --rule:       #e0dfd8;
   --rule-dark:  #c8c7bf;
   --white:      #ffffff;
+
   --serif:   'Noto Serif KR', Georgia, serif;
   --sans:    'Noto Sans KR', system-ui, sans-serif;
   --display: 'IM Fell English', Georgia, serif;
+
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-io:   cubic-bezier(0.645, 0.045, 0.355, 1);
-  --max-w: 1440px;
 }
 
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--sans);
-  background: var(--bg-warm);
+  background: var(--bg);
   color: var(--ink);
   min-height: 100vh;
   overflow-x: hidden;
 }
+
 body::after {
   content: '';
   position: fixed; inset: 0;
@@ -45,23 +49,12 @@ body::after {
   z-index: 9999;
 }
 
-/* ── 1440px 센터 래퍼 ── */
-.page-wrap {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  background: var(--bg);
-  min-height: 100vh;
-  box-shadow: 0 0 0 1px var(--rule), 0 0 60px rgba(0,0,0,0.04);
-}
-
-/* ── 네비 ── */
+/* ══════════════════════════════════════════════
+   네비
+══════════════════════════════════════════════ */
 .site-nav {
   position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: var(--max-w);
+  top: 0; left: 0; right: 0;
   z-index: 500;
   height: 60px;
   padding: 0 56px;
@@ -75,6 +68,7 @@ body::after {
   transition: border-color 0.3s;
 }
 .site-nav.scrolled { border-color: var(--rule); }
+
 .nav-logo {
   font-family: var(--serif);
   font-size: 14px;
@@ -105,13 +99,13 @@ body::after {
 }
 .nav-link:hover { color: var(--ink); }
 .nav-link.active { color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
-.nav-map-btn {
+
+.nav-search-btn {
   display: flex;
   align-items: center;
   gap: 7px;
   font-size: 11px;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   color: var(--ink-mid);
   background: none;
   border: 1px solid var(--rule-dark);
@@ -122,9 +116,11 @@ body::after {
   text-decoration: none;
   transition: all 0.2s;
 }
-.nav-map-btn:hover { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.nav-search-btn:hover { background: var(--ink); color: var(--white); border-color: var(--ink); }
 
-/* ── 히어로 ── */
+/* ══════════════════════════════════════════════
+   히어로
+══════════════════════════════════════════════ */
 .hero {
   min-height: 100vh;
   display: grid;
@@ -269,6 +265,7 @@ body::after {
 .book-card:nth-child(2) { animation-delay: 0.09s; }
 .book-card:nth-child(3) { animation-delay: 0.18s; }
 .book-card:nth-child(4) { animation-delay: 0.27s; }
+
 .book-3d {
   width: 116px; height: 168px;
   position: relative;
@@ -312,8 +309,11 @@ body::after {
 .book-card-title { font-family: var(--serif); font-size: 12px; font-weight: 500; color: var(--ink-mid); }
 .book-card-sub { font-size: 10px; color: var(--ink-light); margin-top: 2px; }
 
-/* ── 아카이브 섹션 ── */
+/* ══════════════════════════════════════════════
+   아카이브
+══════════════════════════════════════════════ */
 .archive-section { border-top: 1px solid var(--rule); }
+
 .archive-header {
   display: flex;
   align-items: flex-end;
@@ -347,29 +347,32 @@ body::after {
   max-width: 280px;
   word-break: keep-all;
 }
-.archive-map-link {
+.archive-search-link {
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-mid);
   text-decoration: none;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
   border-bottom: 1px solid var(--rule-dark);
   padding-bottom: 2px;
   transition: color 0.2s, border-color 0.2s;
 }
-.archive-map-link:hover { color: var(--ink); border-color: var(--ink); }
+.archive-search-link:hover { color: var(--ink); border-color: var(--ink); }
 
 /* 권호 블록 */
 .vol-block { border-bottom: 1px solid var(--rule); }
+
 .vol-block-header {
   display: grid;
   grid-template-columns: 280px 1fr;
   align-items: start;
   border-bottom: 1px solid var(--rule);
 }
+
+/* 왼쪽 */
 .vol-book-side {
   padding: 40px 32px 40px 56px;
   display: flex;
@@ -403,6 +406,7 @@ body::after {
 .vol-book-vol-label { font-family: var(--display); font-style: italic; font-size: 7px; color: rgba(255,255,255,0.35); letter-spacing: 0.15em; position: relative; z-index: 1; }
 .vol-book-title-label { font-family: var(--serif); font-size: 7px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.4; position: relative; z-index: 1; }
 .vol-book-count-label { font-size: 6px; color: rgba(255,255,255,0.25); letter-spacing: 0.1em; position: relative; z-index: 1; }
+
 .vol-info {}
 .vol-badge { font-family: var(--display); font-style: italic; font-size: 9px; color: var(--ink-xlight); letter-spacing: 0.2em; margin-bottom: 8px; }
 .vol-title {
@@ -420,6 +424,8 @@ body::after {
 .vol-subtitle { font-size: 11px; color: var(--ink-light); margin-bottom: 14px; }
 .vol-meta-row { display: flex; flex-wrap: wrap; gap: 4px; }
 .vol-domain-chip { font-size: 9px; letter-spacing: 0.04em; padding: 3px 7px; border: 1px solid var(--rule-dark); color: var(--ink-light); border-radius: 1px; }
+
+/* 오른쪽 */
 .vol-innovators-side { padding: 40px 56px 40px 36px; }
 .vol-grid-header {
   display: flex;
@@ -442,6 +448,8 @@ body::after {
   transition: color 0.2s;
 }
 .vol-view-all:hover { color: var(--ink); }
+
+/* 미리보기 그리드 */
 .innovator-preview-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -464,6 +472,7 @@ body::after {
 .inv-preview-cell:nth-child(3n+2) { padding-left: 14px; }
 .inv-preview-cell:nth-last-child(-n+3) { border-bottom: none; }
 .inv-preview-cell:hover .inv-initial { background: var(--ink); color: var(--white); }
+
 .inv-initial {
   width: 32px; height: 32px;
   flex-shrink: 0;
@@ -492,6 +501,8 @@ body::after {
 .inv-preview-cell:hover .inv-name-text { color: var(--ink); }
 .inv-org-text { font-size: 10px; color: var(--ink-light); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .inv-region-text { font-size: 9px; color: var(--ink-xlight); margin-top: 1px; }
+
+/* 테이블 토글 */
 .vol-toggle-row {
   display: flex;
   justify-content: space-between;
@@ -530,6 +541,8 @@ body::after {
   transition: color 0.2s;
 }
 .vol-open-book-link:hover { color: var(--ink); }
+
+/* 전체 테이블 */
 .vol-full-table {
   overflow: hidden;
   max-height: 0;
@@ -541,6 +554,7 @@ body::after {
   background: var(--bg-warm);
   border-top: 1px solid var(--rule);
 }
+
 .innovator-table { width: 100%; border-collapse: collapse; }
 .innovator-table thead tr { border-bottom: 1px solid var(--rule-dark); }
 .innovator-table th {
@@ -562,10 +576,12 @@ body::after {
 .innovator-table tbody tr:last-child { border-bottom: none; }
 .innovator-table td { padding: 12px 0; vertical-align: middle; }
 .innovator-table td.td-right { text-align: right; }
+
 .td-seq { font-family: var(--display); font-style: italic; font-size: 10px; color: var(--ink-ghost); width: 32px; padding-right: 16px !important; }
 .td-name { font-family: var(--serif); font-size: 13px; font-weight: 500; color: var(--ink); width: 90px; }
 .td-org { font-size: 12px; color: var(--ink-mid); max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .td-region { font-size: 11px; color: var(--ink-light); width: 76px; }
+.td-domains {}
 .domain-tag {
   display: inline-block;
   font-size: 9px;
@@ -587,6 +603,8 @@ body::after {
   transition: color 0.2s, border-color 0.2s;
 }
 .table-read-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+/* 도메인 태그 색상 */
 .dtag-0 { background: #eceae4; border-color: #eceae4; color: #3a3830; }
 .dtag-1 { background: #dde8e4; border-color: #dde8e4; color: #2a3832; }
 .dtag-2 { background: #e4dde8; border-color: #e4dde8; color: #382a3a; }
@@ -642,11 +660,12 @@ body::after {
 .footer-left { font-family: var(--serif); font-size: 13px; font-weight: 500; color: var(--ink-mid); }
 .footer-right { font-size: 11px; color: var(--ink-light); letter-spacing: 0.08em; }
 
-/* ── 반응형 ── */
+/* ── 반응형 ─────────────────────────────── */
 @media (max-width: 1100px) {
   .vol-block-header { grid-template-columns: 240px 1fr; }
   .innovator-preview-grid { grid-template-columns: repeat(2, 1fr); }
   .inv-preview-cell:nth-child(3n) { border-right: 1px solid var(--rule); padding-right: 14px; }
+  .inv-preview-cell:nth-child(3n+1) { padding-left: 0; }
   .inv-preview-cell:nth-child(2n) { border-right: none; padding-right: 0; }
   .inv-preview-cell:nth-child(2n+1) { padding-left: 0; }
   .inv-preview-cell:nth-last-child(-n+3) { border-bottom: 1px solid var(--rule); }
@@ -661,7 +680,7 @@ body::after {
   .archive-header-right { align-items: flex-start; }
   .archive-desc { text-align: left; }
   .vol-block-header { grid-template-columns: 1fr; }
-  .vol-book-side { padding: 32px; border-right: none; border-bottom: 1px solid var(--rule); }
+  .vol-book-side { padding: 32px 32px; border-right: none; border-bottom: 1px solid var(--rule); }
   .vol-innovators-side { padding: 28px 32px 32px; }
   .innovator-preview-grid { grid-template-columns: 1fr; }
   .inv-preview-cell { border-right: none !important; padding-left: 0 !important; padding-right: 0 !important; }
@@ -674,7 +693,7 @@ body::after {
   .site-footer { flex-direction: column; gap: 8px; text-align: center; padding: 28px 24px; }
 }
 @media (max-width: 600px) {
-  .nav-links { gap: 12px; }
+  .nav-links { gap: 16px; }
   .hero-stats { flex-direction: column; gap: 20px; }
   .stat-item { padding: 0 !important; border: none !important; }
   .region-cell { flex: 0 0 100%; }
@@ -683,7 +702,6 @@ body::after {
 </style>
 </head>
 <body>
-<div class="page-wrap">
 
 <nav class="site-nav" id="site-nav">
   <a href="index.html" class="nav-logo">
@@ -692,14 +710,12 @@ body::after {
   </a>
   <div class="nav-links">
     <a href="index.html" class="nav-link active">서재</a>
-    <a href="map.html" class="nav-link">지도 탐색</a>
     <a href="search.html" class="nav-link">검색</a>
-    <a href="map.html" class="nav-map-btn">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M1 3l4 1.5L9 3l3 1.5v7L9 10 5 11.5 1 10V3z"/>
-        <path d="M5 4.5v7M9 3v7"/>
+    <a href="search.html" class="nav-search-btn">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="5.5" cy="5.5" r="3.8"/><path d="M9 9l2.5 2.5"/>
       </svg>
-      지도로 탐색
+      혁신가 찾기
     </a>
   </div>
 </nav>
@@ -727,13 +743,13 @@ body::after {
       </div>
     </div>
     <div class="hero-actions">
-      <a href="map.html" class="btn-primary">
-        지도로 탐색하기
+      <a href="#archive" class="btn-primary">
+        전체 보기
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 7h8M7 3l4 4-4 4"/>
         </svg>
       </a>
-      <a href="#archive" class="btn-ghost">권호 아카이브 ↓</a>
+      <a href="search.html" class="btn-ghost">혁신가 검색 →</a>
     </div>
   </div>
   <div class="hero-shelf" id="hero-shelf">
@@ -752,8 +768,8 @@ body::after {
     </div>
     <div class="archive-header-right">
       <p class="archive-desc">각 권호의 혁신가를 이름·기관·지역·분야로 확인하고, 책을 열어 이야기를 읽어보세요.</p>
-      <a href="map.html" class="archive-map-link">
-        지도로 탐색하기
+      <a href="search.html" class="archive-search-link">
+        전체 검색
         <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M2 5.5h7M5.5 2l3.5 3.5-3.5 3.5"/>
         </svg>
@@ -776,104 +792,157 @@ body::after {
   <div class="footer-right">Cheongdo Innovation Center · <span id="footer-year"></span></div>
 </footer>
 
-</div>
 <script>
 const DATA_BASE = './data';
-const DOMAIN_PALETTE = ['농식품','식음료','교육','문화 예술','상품판매 및 체험','서비스 및 유통','숙박업','커뮤니티, 마을, 공동체'];
-const DOMAIN_SHORT = {'농식품':'농식품','식음료':'식음료','교육':'교육','문화 예술':'문화·예술','상품판매 및 체험':'상품·체험','서비스 및 유통':'서비스·유통','숙박업':'숙박','커뮤니티, 마을, 공동체':'커뮤니티'};
-function domainClass(d) { const idx = DOMAIN_PALETTE.indexOf(d); return `dtag-${idx >= 0 ? idx : 0}`; }
-async function fetchJSON(url) { const r = await fetch(url); if (!r.ok) throw new Error(`${url} (${r.status})`); return r.json(); }
-window.addEventListener('scroll', () => document.getElementById('site-nav').classList.toggle('scrolled', window.scrollY > 10));
+
+/* 도메인 → CSS 인덱스 */
+const DOMAIN_PALETTE = [
+  '농식품','식음료','교육','문화 예술',
+  '상품판매 및 체험','서비스 및 유통','숙박업','커뮤니티, 마을, 공동체'
+];
+const DOMAIN_SHORT = {
+  '농식품':'농식품','식음료':'식음료','교육':'교육','문화 예술':'문화·예술',
+  '상품판매 및 체험':'상품·체험','서비스 및 유통':'서비스·유통',
+  '숙박업':'숙박','커뮤니티, 마을, 공동체':'커뮤니티'
+};
+
+function domainClass(d) {
+  const idx = DOMAIN_PALETTE.indexOf(d);
+  return `dtag-${idx >= 0 ? idx : 0}`;
+}
+
+async function fetchJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${url} (${r.status})`);
+  return r.json();
+}
+
+window.addEventListener('scroll', () =>
+  document.getElementById('site-nav').classList.toggle('scrolled', window.scrollY > 10)
+);
 document.getElementById('footer-year').textContent = new Date().getFullYear();
 
 function makeHeroBook(vol, idx) {
-  return `<div class="book-card" style="animation-delay:${idx*0.1}s" onclick="location.href='book.html?vol=${vol.vol}'">
-    <div class="book-3d"><div class="book-spine"></div><div class="book-face">
-      <div class="book-vol">Vol.${vol.vol}</div>
-      <div class="book-name">청도<br>지역혁신가</div>
-      <div class="book-count">${vol.count}인 수록</div>
-    </div></div>
-    <div class="book-card-label">
-      <div class="book-card-title">Vol.${vol.vol}</div>
-      <div class="book-card-sub">${vol.count}인</div>
-    </div>
-  </div>`;
+  return `
+    <div class="book-card" style="animation-delay:${idx * 0.1}s" onclick="location.href='book.html?vol=${vol.vol}'">
+      <div class="book-3d">
+        <div class="book-spine"></div>
+        <div class="book-face">
+          <div class="book-vol">Vol.${vol.vol}</div>
+          <div class="book-name">청도<br>지역혁신가</div>
+          <div class="book-count">${vol.count}인 수록</div>
+        </div>
+      </div>
+      <div class="book-card-label">
+        <div class="book-card-title">Vol.${vol.vol}</div>
+        <div class="book-card-sub">${vol.count}인</div>
+      </div>
+    </div>`;
 }
 
 function previewCellHTML(inv) {
-  return `<a class="inv-preview-cell" href="book.html?vol=${inv.vol}&page=${inv.page}">
-    <div class="inv-initial">${inv.name.charAt(0)}</div>
-    <div class="inv-info">
-      <div class="inv-name-text">${inv.name}</div>
-      <div class="inv-org-text">${inv.org||'—'}</div>
-      <div class="inv-region-text">${inv.region}</div>
-    </div>
-  </a>`;
+  return `
+    <a class="inv-preview-cell" href="book.html?vol=${inv.vol}&page=${inv.page}">
+      <div class="inv-initial">${inv.name.charAt(0)}</div>
+      <div class="inv-info">
+        <div class="inv-name-text">${inv.name}</div>
+        <div class="inv-org-text">${inv.org || '—'}</div>
+        <div class="inv-region-text">${inv.region}</div>
+      </div>
+    </a>`;
 }
 
 function tableRowHTML(inv, i) {
-  const tags = inv.domains.map(d => `<span class="domain-tag ${domainClass(d)}">${DOMAIN_SHORT[d]||d}</span>`).join('');
-  return `<tr onclick="location.href='book.html?vol=${inv.vol}&page=${inv.page}'">
-    <td class="td-seq">${String(i+1).padStart(2,'0')}</td>
-    <td class="td-name">${inv.name}</td>
-    <td class="td-org">${inv.org||'—'}</td>
-    <td class="td-region">${inv.region}</td>
-    <td class="td-domains">${tags}</td>
-    <td class="td-action td-right"><a class="table-read-btn" href="book.html?vol=${inv.vol}&page=${inv.page}" onclick="event.stopPropagation()">읽기 →</a></td>
-  </tr>`;
+  const tags = inv.domains.map(d =>
+    `<span class="domain-tag ${domainClass(d)}">${DOMAIN_SHORT[d] || d}</span>`
+  ).join('');
+  return `
+    <tr onclick="location.href='book.html?vol=${inv.vol}&page=${inv.page}'">
+      <td class="td-seq">${String(i+1).padStart(2,'0')}</td>
+      <td class="td-name">${inv.name}</td>
+      <td class="td-org">${inv.org || '—'}</td>
+      <td class="td-region">${inv.region}</td>
+      <td class="td-domains">${tags}</td>
+      <td class="td-action td-right"><a class="table-read-btn" href="book.html?vol=${inv.vol}&page=${inv.page}" onclick="event.stopPropagation()">읽기 →</a></td>
+    </tr>`;
 }
 
 function makeVolBlock(vol, innovators) {
-  const preview6 = innovators.slice(0,6);
-  const chips = (vol.domains||[]).map(d => `<span class="vol-domain-chip">${DOMAIN_SHORT[d]||d}</span>`).join('');
-  return `<div class="vol-block">
-    <div class="vol-block-header">
-      <div class="vol-book-side">
-        <div class="vol-book-3d-wrap">
-          <div class="vol-book-3d" onclick="location.href='book.html?vol=${vol.vol}'">
-            <div class="vol-book-spine"></div>
-            <div class="vol-book-face">
-              <div class="vol-book-vol-label">Vol.${vol.vol}</div>
-              <div class="vol-book-title-label">청도<br>지역혁신가</div>
-              <div class="vol-book-count-label">${vol.count}인</div>
+  const preview6 = innovators.slice(0, 6);
+  const chips = (vol.domains || []).map(d =>
+    `<span class="vol-domain-chip">${DOMAIN_SHORT[d] || d}</span>`
+  ).join('');
+
+  return `
+    <div class="vol-block">
+      <div class="vol-block-header">
+        <div class="vol-book-side">
+          <div class="vol-book-3d-wrap">
+            <div class="vol-book-3d" onclick="location.href='book.html?vol=${vol.vol}'">
+              <div class="vol-book-spine"></div>
+              <div class="vol-book-face">
+                <div class="vol-book-vol-label">Vol.${vol.vol}</div>
+                <div class="vol-book-title-label">청도<br>지역혁신가</div>
+                <div class="vol-book-count-label">${vol.count}인</div>
+              </div>
             </div>
           </div>
+          <div class="vol-info">
+            <div class="vol-badge">Volume ${vol.vol}</div>
+            <div class="vol-title" onclick="location.href='book.html?vol=${vol.vol}'">${vol.title}</div>
+            <div class="vol-subtitle">${vol.subtitle} · ${vol.published}</div>
+            <div class="vol-meta-row">${chips}</div>
+          </div>
         </div>
-        <div class="vol-info">
-          <div class="vol-badge">Volume ${vol.vol}</div>
-          <div class="vol-title" onclick="location.href='book.html?vol=${vol.vol}'">${vol.title}</div>
-          <div class="vol-subtitle">${vol.subtitle} · ${vol.published}</div>
-          <div class="vol-meta-row">${chips}</div>
+        <div class="vol-innovators-side">
+          <div class="vol-grid-header">
+            <span class="vol-grid-label">${vol.count}인 중 미리보기</span>
+            <a class="vol-view-all" href="book.html?vol=${vol.vol}">
+              책 펼치기
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 5h6M5 2l3 3-3 3"/>
+              </svg>
+            </a>
+          </div>
+          <div class="innovator-preview-grid">
+            ${preview6.map(previewCellHTML).join('')}
+          </div>
         </div>
       </div>
-      <div class="vol-innovators-side">
-        <div class="vol-grid-header">
-          <span class="vol-grid-label">${vol.count}인 중 미리보기</span>
-          <a class="vol-view-all" href="book.html?vol=${vol.vol}">책 펼치기 <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h6M5 2l3 3-3 3"/></svg></a>
+
+      <div class="vol-toggle-row">
+        <button class="vol-toggle-btn" id="tbtn-${vol.vol}" onclick="toggleTable(${vol.vol},${vol.count})">
+          전체 ${vol.count}인 목록 보기
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4l4 4 4-4"/>
+          </svg>
+        </button>
+        <a class="vol-open-book-link" href="book.html?vol=${vol.vol}">
+          책 열기
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 5h6M5 2l3 3-3 3"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="vol-full-table" id="vtbl-${vol.vol}">
+        <div class="vol-table-inner">
+          <table class="innovator-table">
+            <thead>
+              <tr>
+                <th style="width:32px">#</th>
+                <th style="width:90px">이름</th>
+                <th style="width:160px">기관·직함</th>
+                <th style="width:76px">지역</th>
+                <th>분야</th>
+                <th class="th-right" style="width:56px"></th>
+              </tr>
+            </thead>
+            <tbody>${innovators.map(tableRowHTML).join('')}</tbody>
+          </table>
         </div>
-        <div class="innovator-preview-grid">${preview6.map(previewCellHTML).join('')}</div>
       </div>
-    </div>
-    <div class="vol-toggle-row">
-      <button class="vol-toggle-btn" id="tbtn-${vol.vol}" onclick="toggleTable(${vol.vol},${vol.count})">
-        전체 ${vol.count}인 목록 보기
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l4 4 4-4"/></svg>
-      </button>
-      <a class="vol-open-book-link" href="book.html?vol=${vol.vol}">책 열기 <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h6M5 2l3 3-3 3"/></svg></a>
-    </div>
-    <div class="vol-full-table" id="vtbl-${vol.vol}">
-      <div class="vol-table-inner">
-        <table class="innovator-table">
-          <thead><tr>
-            <th style="width:32px">#</th><th style="width:90px">이름</th>
-            <th style="width:160px">기관·직함</th><th style="width:76px">지역</th>
-            <th>분야</th><th class="th-right" style="width:56px"></th>
-          </tr></thead>
-          <tbody>${innovators.map(tableRowHTML).join('')}</tbody>
-        </table>
-      </div>
-    </div>
-  </div>`;
+    </div>`;
 }
 
 function toggleTable(vol, count) {
@@ -881,15 +950,17 @@ function toggleTable(vol, count) {
   const btn = document.getElementById(`tbtn-${vol}`);
   const open = tbl.classList.toggle('open');
   btn.classList.toggle('open', open);
-  btn.childNodes[0].textContent = open ? `목록 닫기 ` : `전체 ${count}인 목록 보기 `;
+  btn.childNodes[0].textContent = open
+    ? `목록 닫기 `
+    : `전체 ${count}인 목록 보기 `;
 }
 
 function buildRegionGrid(innovators) {
   const map = {};
-  innovators.forEach(inv => { map[inv.region] = (map[inv.region]||0)+1; });
+  innovators.forEach(inv => { map[inv.region] = (map[inv.region] || 0) + 1; });
   const sorted = Object.entries(map).sort((a,b) => b[1]-a[1]);
-  document.getElementById('region-grid').innerHTML = sorted.map(([name,cnt]) =>
-    `<a class="region-cell" href="map.html?region=${encodeURIComponent(name)}">
+  document.getElementById('region-grid').innerHTML = sorted.map(([name, cnt]) =>
+    `<a class="region-cell" href="search.html?region=${encodeURIComponent(name)}">
       <span class="region-name">${name}</span>
       <span class="region-count">${cnt}</span>
     </a>`
@@ -905,22 +976,32 @@ async function init() {
     ]);
     const vols = volData.volumes;
     const all  = indexData.innovators;
-    document.getElementById('hero-total').textContent = vols.reduce((s,v)=>s+v.count,0);
+
+    document.getElementById('hero-total').textContent = vols.reduce((s,v) => s+v.count, 0);
     document.getElementById('hero-vols').textContent  = vols.length;
-    document.getElementById('archive-count-label').textContent = `— ${vols.reduce((s,v)=>s+v.count,0)}인`;
+    document.getElementById('archive-count-label').textContent =
+      `— ${vols.reduce((s,v)=>s+v.count,0)}인`;
+
+    /* 히어로 */
     const shelf = document.getElementById('hero-shelf');
     const r1 = vols.slice(0,2), r2 = vols.slice(2,4);
     shelf.innerHTML += `<div class="shelf-row">${r1.map((v,i)=>makeHeroBook(v,i)).join('')}</div>`;
     if (r2.length) shelf.innerHTML += `<div class="shelf-row">${r2.map((v,i)=>makeHeroBook(v,i+2)).join('')}</div>`;
+
+    /* 아카이브 */
     document.getElementById('volumes-container').innerHTML =
-      vols.map(vol => makeVolBlock(vol, all.filter(inv=>inv.vol===vol.vol))).join('');
+      vols.map(vol => makeVolBlock(vol, all.filter(inv => inv.vol === vol.vol))).join('');
+
+    /* 지역 */
     buildRegionGrid(all);
-  } catch(err) {
+
+  } catch (err) {
     console.error(err);
     document.getElementById('volumes-container').innerHTML =
       `<p style="padding:40px 56px;font-size:13px;color:#999">데이터를 불러오지 못했습니다. <small>${err.message}</small></p>`;
   }
 }
+
 init();
 </script>
 </body>
