@@ -1,0 +1,44 @@
+{
+  "volumes": [
+    {
+      "vol": 1,
+      "title": "청도 혁신가 Vol.1",
+      "subtitle": "1번째 이야기",
+      "published": "2026-04",
+      "cover_color": "#0d0d0d",
+      "cover_image": "images/vol-01/cover.jpg",
+      "count": 28,
+      "domains": [
+        "교육",
+        "농식품",
+        "문화 예술",
+        "상품판매 및 체험",
+        "서비스 및 유통",
+        "숙박업",
+        "식음료",
+        "커뮤니티, 마을, 공동체"
+      ],
+      "status": "published"
+    },
+    {
+      "vol": 2,
+      "title": "청도 혁신가 Vol.2",
+      "subtitle": "2번째 이야기",
+      "published": "2026-04",
+      "cover_color": "#1a1a1a",
+      "cover_image": "images/vol-02/cover.jpg",
+      "count": 22,
+      "domains": [
+        "교육",
+        "농식품",
+        "문화 예술",
+        "상품판매 및 체험",
+        "서비스 및 유통",
+        "숙박업",
+        "식음료",
+        "커뮤니티, 마을, 공동체"
+      ],
+      "status": "published"
+    }
+  ]
+}

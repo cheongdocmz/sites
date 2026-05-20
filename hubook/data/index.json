@@ -1,0 +1,843 @@
+{
+  "total": 50,
+  "innovators": [
+    {
+      "vol": 1,
+      "id": "vol01_001",
+      "page": 1,
+      "name": "김기태",
+      "org": "그로채",
+      "group": "",
+      "region": "각남면",
+      "domains": [
+        "농식품",
+        "서비스 및 유통"
+      ],
+      "activity": "",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/김기태.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_002",
+      "page": 2,
+      "name": "김기훈",
+      "org": "이륜마굿간",
+      "group": "함께하는 기업",
+      "region": "청도읍",
+      "domains": [
+        "식음료",
+        "문화 예술"
+      ],
+      "activity": "바이크족 관련 사업 진행  및 로컬크리에이터로 활발한 활동",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/김기훈.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_003",
+      "page": 3,
+      "name": "김은하",
+      "org": "멜로우티 대표",
+      "group": "",
+      "region": "매전면",
+      "domains": [
+        "식음료",
+        "숙박업",
+        "교육"
+      ],
+      "activity": "매전면 카페 운영 및 로컬크리에이터로 활발한 활동",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/김은하.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_004",
+      "page": 4,
+      "name": "김정화",
+      "org": "마마스 핸즈",
+      "group": "",
+      "region": "화양읍",
+      "domains": [
+        "상품판매 및 체험"
+      ],
+      "activity": "",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/김정화.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_005",
+      "page": 5,
+      "name": "박선미",
+      "org": "홍차리에/대표",
+      "group": "함께하는 기업",
+      "region": "화양읍",
+      "domains": [
+        "식음료",
+        "상품판매 및 체험"
+      ],
+      "activity": "폴란드 8년 거주 후 홍차전문카페 창업, 국제 Tea Club 운영",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/박선미.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_006",
+      "page": 6,
+      "name": "배정란",
+      "org": "노는엄마들/대표",
+      "group": "입주기업",
+      "region": "화양읍",
+      "domains": [
+        "커뮤니티, 마을, 공동체",
+        "교육"
+      ],
+      "activity": "공동육아 및 문화기획",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/배정란.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_007",
+      "page": 7,
+      "name": "오동엽",
+      "org": "이로움",
+      "group": "함께하는 기업",
+      "region": "화양읍",
+      "domains": [
+        "농식품",
+        "서비스 및 유통"
+      ],
+      "activity": "",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/오동엽.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_008",
+      "page": 8,
+      "name": "임미정",
+      "org": "(주)유니디자인경영연구소/대표",
+      "group": "",
+      "region": "풍각면",
+      "domains": [
+        "커뮤니티, 마을, 공동체"
+      ],
+      "activity": "",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/임미정.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_009",
+      "page": 9,
+      "name": "정인숙",
+      "org": "덕인농가",
+      "group": "",
+      "region": "매전면",
+      "domains": [
+        "농식품",
+        "상품판매 및 체험"
+      ],
+      "activity": "",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/정인숙.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_010",
+      "page": 10,
+      "name": "조경현",
+      "org": "꿈꾸는 공작소/소장",
+      "group": "",
+      "region": "풍각면",
+      "domains": [
+        "상품판매 및 체험",
+        "숙박업"
+      ],
+      "activity": "",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/조경현.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_011",
+      "page": 11,
+      "name": "조민정",
+      "org": "꿈그린농원/실장",
+      "group": "함께하는 기업",
+      "region": "각남면",
+      "domains": [
+        "상품판매 및 체험",
+        "농식품"
+      ],
+      "activity": "꿈그린 농원 운영",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/조민정.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_012",
+      "page": 12,
+      "name": "조은경",
+      "org": "우아한호작질 / 대표",
+      "group": "함께하는 기업",
+      "region": "각남면",
+      "domains": [
+        "상품판매 및 체험"
+      ],
+      "activity": "라탄공방 운영 및 외부출강, 미술학도 부부",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/조은경.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_013",
+      "page": 13,
+      "name": "지소영",
+      "org": "할:베스트/대표",
+      "group": "함께하는 기업",
+      "region": "이서면",
+      "domains": [
+        "커뮤니티, 마을, 공동체",
+        "문화 예술"
+      ],
+      "activity": "문화 예술 프로젝트로 농촌 시니어의 사회참여 지원",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/지소영.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_014",
+      "page": 14,
+      "name": "진보라",
+      "org": "꾸꾸네/대표",
+      "group": "함께하는 기업",
+      "region": "운문면",
+      "domains": [
+        "식음료",
+        "서비스 및 유통"
+      ],
+      "activity": "운문면에 위치한 디저트 카페",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/진보라.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_015",
+      "page": 15,
+      "name": "최형규",
+      "org": "원더/대표",
+      "group": "입주기업",
+      "region": "매전면",
+      "domains": [
+        "서비스 및 유통"
+      ],
+      "activity": "청도 매전면의 폐교를 리모델링해 반려견 전용 캠핑장으로 운영",
+      "projects": "청도 사람책, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-01/최형규.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_016",
+      "page": 16,
+      "name": "김경일",
+      "org": "청도군 귀농귀촌 종합지원센터",
+      "group": "",
+      "region": "청도읍",
+      "domains": [
+        "커뮤니티, 마을, 공동체"
+      ],
+      "activity": "",
+      "projects": "청도 사람책, 중간지원조직 및 기관",
+      "tagline": "",
+      "thumbnail": "images/vol-01/김경일.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_017",
+      "page": 17,
+      "name": "곽정의",
+      "org": "청도혁신센터/사업매니저",
+      "group": "",
+      "region": "화양읍",
+      "domains": [
+        "커뮤니티, 마을, 공동체"
+      ],
+      "activity": "다로리 마을공동체 주민",
+      "projects": "청도 사람책, 재단 직원",
+      "tagline": "",
+      "thumbnail": "images/vol-01/곽정의.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_018",
+      "page": 18,
+      "name": "김경순",
+      "org": "청도 발도르프 마을",
+      "group": "",
+      "region": "화양읍",
+      "domains": [
+        "커뮤니티, 마을, 공동체",
+        "상품판매 및 체험"
+      ],
+      "activity": "",
+      "projects": "청도 사람책",
+      "tagline": "",
+      "thumbnail": "images/vol-01/김경순.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_019",
+      "page": 19,
+      "name": "김지환",
+      "org": "운문우체국/국장",
+      "group": "",
+      "region": "운문면",
+      "domains": [
+        "커뮤니티, 마을, 공동체"
+      ],
+      "activity": "공무원 및 청도3040 포럼 활동",
+      "projects": "청도 사람책",
+      "tagline": "",
+      "thumbnail": "images/vol-01/김지환.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_020",
+      "page": 20,
+      "name": "박미나",
+      "org": "청도여성 CEO 클럽/대표",
+      "group": "입주기업",
+      "region": "이서면",
+      "domains": [
+        "상품판매 및 체험",
+        "농식품"
+      ],
+      "activity": "이서면에서 활동, 야생화",
+      "projects": "청도 사람책",
+      "tagline": "",
+      "thumbnail": "images/vol-01/박미나.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_021",
+      "page": 21,
+      "name": "박성재",
+      "org": "잭과 사과나무, 다스/대표",
+      "group": "",
+      "region": "각남면",
+      "domains": [
+        "상품판매 및 체험",
+        "농식품"
+      ],
+      "activity": "잭과 사과나무 농장 / 청년예술단체 다스 운영",
+      "projects": "청도 사람책",
+      "tagline": "",
+      "thumbnail": "images/vol-01/박성재.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_022",
+      "page": 22,
+      "name": "엄윤숙",
+      "org": "각북촌년 농장운영",
+      "group": "",
+      "region": "각북면",
+      "domains": [
+        "커뮤니티, 마을, 공동체",
+        "농식품"
+      ],
+      "activity": "각북 사과 농장 운영 및 청도군, 청도혁신센터  sns 홍보단 활동",
+      "projects": "청도 사람책",
+      "tagline": "",
+      "thumbnail": "images/vol-01/엄윤숙.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_023",
+      "page": 23,
+      "name": "예병진",
+      "org": "청년농부",
+      "group": "",
+      "region": "금천면",
+      "domains": [
+        "농식품"
+      ],
+      "activity": "",
+      "projects": "청도 사람책",
+      "tagline": "",
+      "thumbnail": "images/vol-01/예병진.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_024",
+      "page": 24,
+      "name": "이동혁",
+      "org": "청도군 체육회/배드민턴 코치",
+      "group": "",
+      "region": "청도읍",
+      "domains": [
+        "교육"
+      ],
+      "activity": "청도군내 배드민턴 교육",
+      "projects": "청도 사람책",
+      "tagline": "",
+      "thumbnail": "images/vol-01/이동혁.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_025",
+      "page": 25,
+      "name": "이수영",
+      "org": "가까이마켓/대표",
+      "group": "",
+      "region": "금천면",
+      "domains": [
+        "커뮤니티, 마을, 공동체",
+        "문화 예술",
+        "교육"
+      ],
+      "activity": "금천에 위치한 농산물 판매업(인터넷)",
+      "projects": "청도 사람책",
+      "tagline": "",
+      "thumbnail": "images/vol-01/이수영.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_026",
+      "page": 26,
+      "name": "장세범",
+      "org": "채채네팜",
+      "group": "",
+      "region": "이서면",
+      "domains": [
+        "농식품",
+        "상품판매 및 체험"
+      ],
+      "activity": "이서면에서 부모님과 함께 농사짓고 있는 청년농부 부부",
+      "projects": "청도 사람책",
+      "tagline": "",
+      "thumbnail": "images/vol-01/장세범.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_027",
+      "page": 27,
+      "name": "최정원",
+      "org": "청도신문",
+      "group": "",
+      "region": "청도읍",
+      "domains": [
+        "커뮤니티, 마을, 공동체"
+      ],
+      "activity": "청도군 지역신문사",
+      "projects": "청도 사람책",
+      "tagline": "",
+      "thumbnail": "images/vol-01/최정원.jpg"
+    },
+    {
+      "vol": 1,
+      "id": "vol01_028",
+      "page": 28,
+      "name": "홍은영",
+      "org": "홍홍패밀리/대표",
+      "group": "",
+      "region": "이서면",
+      "domains": [
+        "서비스 및 유통"
+      ],
+      "activity": "축산업 및 인터넷 판매업",
+      "projects": "청도 사람책",
+      "tagline": "",
+      "thumbnail": "images/vol-01/홍은영.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_029",
+      "page": 29,
+      "name": "강명주",
+      "org": "몰트앤파머스/대표",
+      "group": "함께하는 기업",
+      "region": "화양읍",
+      "domains": [
+        "상품판매 및 체험",
+        "서비스 및 유통"
+      ],
+      "activity": "발효기반의 다양한 저염, 저당 건강식 제품과 서비스를 제안하는 기업",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/강명주.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_030",
+      "page": 30,
+      "name": "강민구",
+      "org": "코지테임/이사",
+      "group": "함께하는 기업",
+      "region": "화양읍",
+      "domains": [
+        "상품판매 및 체험",
+        "서비스 및 유통"
+      ],
+      "activity": "발효기반의 다양한 저염, 저당 건강식 제품과 서비스를 제안하는 기업",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/강민구.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_031",
+      "page": 31,
+      "name": "구승희",
+      "org": "협동조합온누리/대표",
+      "group": "입주기업",
+      "region": "화양읍",
+      "domains": [
+        "커뮤니티, 마을, 공동체",
+        "문화 예술",
+        "교육"
+      ],
+      "activity": "청도를 대표하는 국악단체, 국악 전문 예술공동체 운영",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/구승희.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_033",
+      "page": 33,
+      "name": "김경진",
+      "org": "청도대디",
+      "group": "함께하는 사람",
+      "region": "화양읍",
+      "domains": [
+        "식음료",
+        "서비스 및 유통"
+      ],
+      "activity": "",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/김경진.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_035",
+      "page": 35,
+      "name": "김예원",
+      "org": "하이마켓/대표",
+      "group": "함께하는 기업",
+      "region": "청도읍",
+      "domains": [
+        "농식품",
+        "서비스 및 유통"
+      ],
+      "activity": "청도 특산물을 기반으로 농수산물 가공식품 판매",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/김예원.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_036",
+      "page": 36,
+      "name": "김은성",
+      "org": "홍시생활/대표",
+      "group": "함께하는 기업",
+      "region": "화양읍",
+      "domains": [
+        "문화 예술",
+        "상품판매 및 체험"
+      ],
+      "activity": "제로웨이스트 샵 운영, 청도퍼머컬처학교 운영, 매달 마지막 주 토요일 플로깅 진행",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/김은성.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_039",
+      "page": 39,
+      "name": "박성애",
+      "org": "씽크로콥/대표",
+      "group": "함께하는 기업",
+      "region": "화양읍",
+      "domains": [
+        "서비스 및 유통"
+      ],
+      "activity": "브랜드 개발 및 굿즈 제작, 강의",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/박성애.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_041",
+      "page": 41,
+      "name": "박영희",
+      "org": "오마이북, 오마이쿡, 스테이온페이지/대표",
+      "group": "함께하는 기업",
+      "region": "화양읍",
+      "domains": [
+        "식음료",
+        "숙박업"
+      ],
+      "activity": "화양읍에 위치한 서점기반 문화복합공간 및 카페 운영",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/박영희.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_044",
+      "page": 44,
+      "name": "서삼열",
+      "org": "다로리인/대표",
+      "group": "입주기업",
+      "region": "화양읍",
+      "domains": [
+        "커뮤니티, 마을, 공동체",
+        "식음료",
+        "교육"
+      ],
+      "activity": "다로리 마을공동체 주민, 문화기획 및 카페다로리 운영",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/서삼열.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_046",
+      "page": 46,
+      "name": "송제익",
+      "org": "익스브랜딩/대표",
+      "group": "입주기업",
+      "region": "화양읍",
+      "domains": [
+        "서비스 및 유통"
+      ],
+      "activity": "브랜드 개발 및 굿즈 제작, 강의",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/송제익.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_047",
+      "page": 47,
+      "name": "신인숙",
+      "org": "지금결실의계절/대표",
+      "group": "입주기업",
+      "region": "화양읍",
+      "domains": [
+        "커뮤니티, 마을, 공동체",
+        "농식품"
+      ],
+      "activity": "부부 농부 / 방울토마토, 복숭아, 블루베리, 감 등의 농사",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/신인숙.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_050",
+      "page": 50,
+      "name": "윤민욱",
+      "org": "브릭분교/대표",
+      "group": "입주기업",
+      "region": "화양읍",
+      "domains": [
+        "문화 예술"
+      ],
+      "activity": "브릭 창작 교육, 전시, 굿즈 제작/로컬의 문화와 한국의 정서를 브릭으로 표현",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/윤민욱.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_051",
+      "page": 51,
+      "name": "윤신명",
+      "org": "우리집목건축/대표",
+      "group": "함께하는 기업",
+      "region": "청도읍",
+      "domains": [
+        "상품판매 및 체험",
+        "농식품"
+      ],
+      "activity": "",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/윤신명.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_052",
+      "page": 52,
+      "name": "이승아",
+      "org": "풀소리플라워/대표",
+      "group": "함께하는 기업",
+      "region": "청도읍",
+      "domains": [
+        "농식품",
+        "상품판매 및 체험"
+      ],
+      "activity": "청도읍에 위치한 꽃집",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/이승아.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_053",
+      "page": 53,
+      "name": "이지연",
+      "org": "포도하다/대표 + 농부점빵",
+      "group": "함께하는 기업",
+      "region": "",
+      "domains": [
+        "농식품",
+        "상품판매 및 체험"
+      ],
+      "activity": "농산물 판매업(인터넷)",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/이지연.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_054",
+      "page": 54,
+      "name": "정세윤",
+      "org": "시실리/대표",
+      "group": "함께하는 기업",
+      "region": "화양읍",
+      "domains": [
+        "식음료",
+        "농식품"
+      ],
+      "activity": "화양읍성 근처 카페, 감을 이용한 가공식품",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/정세윤.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_056",
+      "page": 56,
+      "name": "송재필",
+      "org": "(주)로컬누리마켓/대표",
+      "group": "함께하는 기업",
+      "region": "",
+      "domains": [
+        "농식품",
+        "서비스 및 유통"
+      ],
+      "activity": "",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/송재필.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_057",
+      "page": 57,
+      "name": "양동섭",
+      "org": "시그널케어/대표",
+      "group": "함께하는 기업",
+      "region": "",
+      "domains": [
+        "서비스 및 유통"
+      ],
+      "activity": "",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/양동섭.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_058",
+      "page": 58,
+      "name": "김창현",
+      "org": "사회적협동조합 도약/ 이사",
+      "group": "함께하는 기업",
+      "region": "",
+      "domains": [
+        "커뮤니티, 마을, 공동체"
+      ],
+      "activity": "경상북도 내 청소년 및 청년의 교육에 대한 지원 활동",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/김창현.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_060",
+      "page": 60,
+      "name": "이주연",
+      "org": "이젠/대표",
+      "group": "입주기업",
+      "region": "",
+      "domains": [
+        "농식품",
+        "서비스 및 유통"
+      ],
+      "activity": "",
+      "projects": "지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/이주연.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_098",
+      "page": 98,
+      "name": "김태윤",
+      "org": "스누캣/대표",
+      "group": "함께하는 기업",
+      "region": "",
+      "domains": [
+        "식음료",
+        "상품판매 및 체험"
+      ],
+      "activity": "",
+      "projects": "사업참여, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/김태윤.jpg"
+    },
+    {
+      "vol": 2,
+      "id": "vol02_116",
+      "page": 116,
+      "name": "황창현",
+      "org": "대장군농원/대표",
+      "group": "함께하는 사람",
+      "region": "",
+      "domains": [
+        "농식품",
+        "상품판매 및 체험"
+      ],
+      "activity": "",
+      "projects": "사업참여, 지역기업",
+      "tagline": "",
+      "thumbnail": "images/vol-02/황창현.jpg"
+    }
+  ]
+}

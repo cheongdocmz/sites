@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>청도 지역혁신가 — 책 뷰어</title>
+<link rel="icon" type="image/png" href="cmz_logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ── 공통 변수 ───────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink:        #0d0d0d;
+  --ink-mid:    #404040;
+  --ink-light:  #888888;
+  --ink-xlight: #bbbbbb;
+  --bg:         #ffffff;
+  --bg-2:       #f5f5f5;
+  --bg-3:       #ebebeb;
+  --rule:       #d8d8d8;
+  --white:      #ffffff;
+
+  --serif:  'Noto Serif KR', Georgia, serif;
+  --sans:   'Noto Sans KR', system-ui, sans-serif;
+  --display:'IM Fell English', Georgia, serif;
+
+  --ease-flip: cubic-bezier(0.4, 0, 0.2, 1);
+  --flip-dur:  0.55s;
+
+  --page-w: 400px;
+  --page-h: 560px;
+}
+
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg-2);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── 헤더 ────────────────────────────────────── */
+.bv-header {
+  flex-shrink: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+  z-index: 100;
+}
+.bv-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  text-decoration: none;
+  transition: color 0.2s, gap 0.2s;
+}
+.bv-back:hover { color: var(--ink); gap: 12px; }
+.bv-back svg { transition: transform 0.2s; }
+.bv-back:hover svg { transform: translateX(-3px); }
+
+.bv-title {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-mid);
+  letter-spacing: 0.03em;
+}
+.bv-search-link {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink-light);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+.bv-search-link:hover { color: var(--ink); }
+
+/* ── 책 영역 ─────────────────────────────────── */
+.bv-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 화살표 버튼 */
+.flip-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  background: var(--bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-mid);
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+  flex-shrink: 0;
+  z-index: 10;
+}
+.flip-btn:hover:not(:disabled) { background: var(--ink); color: var(--white); border-color: var(--ink); transform: scale(1.06); }
+.flip-btn:active:not(:disabled) { transform: scale(0.94); }
+.flip-btn:disabled { opacity: 0.18; cursor: default; }
+
+/* ── 책 본체 ─────────────────────────────────── */
+.book-wrap {
+  position: relative;
+  /* perspective는 여기서 설정 — 자연스러운 원근감 */
+  perspective: 2400px;
+  perspective-origin: 50% 48%;
+}
+
+.book-body {
+  position: relative;
+  width: calc(var(--page-w) * 2);
+  height: var(--page-h);
+  transform-style: preserve-3d;
+  /* 약간의 전체 기울기로 실제 책 느낌 */
+  transform: rotateX(2deg);
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.04),
+    0 8px 24px rgba(0,0,0,0.10),
+    0 24px 64px rgba(0,0,0,0.14);
+}
+
+/* 책 중앙 바인딩 */
+.book-binding {
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 3px;
+  transform: translateX(-50%);
+  background: linear-gradient(to right,
+    rgba(0,0,0,0.18) 0%,
+    rgba(0,0,0,0.06) 40%,
+    rgba(0,0,0,0.06) 60%,
+    rgba(0,0,0,0.18) 100%
+  );
+  z-index: 50;
+  pointer-events: none;
+}
+
+/* 페이지 슬롯 */
+.page-slot {
+  position: absolute;
+  top: 0;
+  width: var(--page-w);
+  height: var(--page-h);
+  overflow: hidden;
+}
+.page-slot-L { left: 0; }
+.page-slot-R { right: 0; }
+
+.page {
+  width: 100%;
+  height: 100%;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+.page-slot-L .page { border-radius: 2px 0 0 2px; }
+.page-slot-R .page { border-radius: 0 2px 2px 0; }
+
+/* 책등쪽 그림자 */
+.page-slot-L .page::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; width: 28px;
+  background: linear-gradient(to left, rgba(0,0,0,0.07), transparent);
+  z-index: 2; pointer-events: none;
+}
+.page-slot-R .page::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0; width: 28px;
+  background: linear-gradient(to right, rgba(0,0,0,0.07), transparent);
+  z-index: 2; pointer-events: none;
+}
+
+/* ── 페이지 넘김 — 모션 전용 레이어 ────────── */
+/*
+  콘텐츠 없는 순수 모션 레이어.
+  새 페이지는 슬롯에 미리 세팅해두고
+  레이어가 접히며 그 아래가 드러나는 방식.
+
+  next: 오른쪽→왼쪽 접힘, origin = left
+  prev: 왼쪽→오른쪽 접힘, origin = right
+*/
+.flip-layer {
+  position: absolute;
+  top: 0;
+  width: var(--page-w);
+  height: var(--page-h);
+  z-index: 40;
+  pointer-events: none;
+  will-change: transform;
+  /* 페이지 색 + 미세 그라디언트로 종이 느낌 */
+  background: linear-gradient(to bottom, #fafafa, #f2f2f2);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.06);
+  backface-visibility: hidden;
+}
+.flip-layer.dir-next {
+  right: 0;
+  transform-origin: left center;
+  /* 접힘 진행 시 오른쪽 가장자리에 그림자 */
+  box-shadow: -4px 0 16px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
+}
+.flip-layer.dir-prev {
+  left: 0;
+  transform-origin: right center;
+  box-shadow: 4px 0 16px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
+}
+
+/* 접히는 동안 레이어 위에 얹히는 그림자 (입체감) */
+.flip-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.flip-layer.dir-next::after {
+  background: linear-gradient(to left, rgba(0,0,0,0.18) 0%, transparent 55%);
+}
+.flip-layer.dir-prev::after {
+  background: linear-gradient(to right, rgba(0,0,0,0.18) 0%, transparent 55%);
+}
+.flip-layer.animating::after { opacity: 1; }
+
+/* ── 하단 바 ─────────────────────────────────── */
+.bv-footer {
+  flex-shrink: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: var(--bg);
+  border-top: 1px solid var(--rule);
+}
+.bv-page-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--bg-3);
+  transition: background 0.3s, transform 0.3s;
+}
+.dot.active {
+  background: var(--ink);
+  transform: scale(1.3);
+}
+.bv-page-label {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-light);
+  letter-spacing: 0.08em;
+  min-width: 80px;
+  text-align: center;
+}
+
+.kb-hint {
+  position: fixed;
+  bottom: 56px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--ink-xlight);
+  letter-spacing: 0.1em;
+  opacity: 0;
+  animation: hintFade 0.5s ease 1.5s forwards;
+  pointer-events: none;
+}
+@keyframes hintFade { to { opacity: 1; } }
+.kb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  border: 1px solid var(--bg-3);
+  border-radius: 2px;
+  font-size: 9px;
+  color: var(--ink-xlight);
+}
+
+/* ══════════════════════════════════════════════
+   페이지 콘텐츠 스타일
+══════════════════════════════════════════════ */
+
+/* ── 표지 ──────────────────────────────────── */
+.pg-cover {
+  width: 100%; height: 100%;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 44px 40px;
+  position: relative;
+  overflow: hidden;
+  color: var(--white);
+}
+.pg-cover::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.pg-cover::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.cv-pre {
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  position: relative; z-index: 1;
+}
+.cv-main { position: relative; z-index: 1; }
+.cv-vol {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 80px;
+  line-height: 1;
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 2px;
+}
+.cv-title {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+.cv-rule { width: 36px; height: 1px; background: rgba(255,255,255,0.18); margin-bottom: 16px; }
+.cv-sub {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+}
+.cv-bottom { position: relative; z-index: 1; }
+.cv-count {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.15em;
+  margin-bottom: 4px;
+}
+.cv-region {
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+}
+
+/* ── 뒷표지 ─────────────────────────────────── */
+.pg-back-cover {
+  width: 100%; height: 100%;
+  background: var(--bg-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 44px 40px;
+}
+.bc-rule { width: 28px; height: 1px; background: var(--rule); }
+.bc-logo {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.6;
+}
+.bc-logo small {
+  display: block;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ink-light);
+}
+.bc-desc {
+  font-size: 11px;
+  line-height: 1.9;
+  color: var(--ink-light);
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+/* ── 빈 페이지 ─────────────────────────────── */
+.pg-blank { width: 100%; height: 100%; background: var(--bg-2); }
+
+/* ── 목차 ──────────────────────────────────── */
+.pg-toc {
+  width: 100%; height: 100%;
+  padding: 44px 36px;
+  background: var(--white);
+  overflow: hidden;
+}
+.toc-head {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 20px;
+}
+.toc-list { list-style: none; }
+.toc-row {
+  display: flex;
+  align-items: baseline;
+  padding: 6px 4px;
+  border-bottom: 1px dotted rgba(0,0,0,0.08);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.12s;
+}
+.toc-row:hover { background: var(--bg-2); }
+.toc-n {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 9px;
+  color: var(--ink-xlight);
+  width: 20px;
+  flex-shrink: 0;
+}
+.toc-name {
+  font-family: var(--serif);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  flex: 1;
+}
+.toc-org {
+  font-size: 10px;
+  color: var(--ink-light);
+  flex: 1;
+  padding: 0 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.toc-pg {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 10px;
+  color: var(--ink-xlight);
+  width: 20px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── 인물 왼쪽 (사진 + 기본정보) ────────────── */
+.pg-person-l {
+  width: 100%; height: 100%;
+  padding: 40px 32px 40px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--white);
+  overflow: hidden;
+}
+.p-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  max-height: 210px;
+  background: var(--bg-2);
+  border-radius: 1px;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}
+.p-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(100%) contrast(1.05);
+  transition: filter 0.5s ease;
+}
+.p-photo:hover img { filter: grayscale(0%) contrast(1); }
+.p-photo-init {
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--bg-2), var(--bg-3));
+}
+.p-photo-init span {
+  font-family: var(--serif);
+  font-size: 48px;
+  color: var(--rule);
+  font-weight: 700;
+}
+.p-info {}
+.p-seq {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--ink-xlight);
+  margin-bottom: 6px;
+}
+.p-name {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.p-org {
+  font-size: 11px;
+  color: var(--ink-mid);
+  margin-bottom: 14px;
+}
+.p-divider { width: 20px; height: 1px; background: var(--rule); margin-bottom: 12px; }
+.p-meta-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+.p-meta-key {
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-xlight);
+  width: 30px;
+  flex-shrink: 0;
+}
+.p-meta-val { font-size: 11px; color: var(--ink-mid); }
+.p-domains {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 10px;
+}
+.p-domain-tag {
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  padding: 2px 7px;
+  border: 1px solid var(--rule);
+  color: var(--ink-light);
+}
+.p-sns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.p-sns-link {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.p-sns-link:hover { color: var(--ink); border-color: var(--ink); }
+
+/* ── 인물 왼쪽 short_bio ─────────────────── */
+.p-short-bio {
+  font-size: 11px;
+  line-height: 1.85;
+  color: var(--ink-mid);
+  word-break: keep-all;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ── 인물 오른쪽 (스토리) ─────────────────── */
+.pg-person-r {
+  width: 100%; height: 100%;
+  padding: 40px 40px 40px 32px;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  overflow: hidden;
+}
+.p-story-label {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-xlight);
+  margin-bottom: 16px;
+}
+.p-tagline {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
+  word-break: keep-all;
+}
+.p-story {
+  font-size: 12px;
+  line-height: 1.95;
+  color: var(--ink-mid);
+  flex: 1;
+  overflow: hidden;
+  word-break: keep-all;
+}
+/* story 섹션 블록 */
+.p-story-sections {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.p-story-section {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.p-section-key {
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-xlight);
+}
+.p-section-val {
+  font-size: 11.5px;
+  line-height: 1.85;
+  color: var(--ink-mid);
+  word-break: keep-all;
+}
+.p-quote-block {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+.p-quote-label {
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-xlight);
+  margin-bottom: 4px;
+}
+.p-quote-text {
+  font-family: var(--serif);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--ink);
+  font-style: italic;
+}
+.p-activity-block {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+.p-activity-label {
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-xlight);
+  margin-bottom: 6px;
+}
+.p-activity-text { font-size: 11px; line-height: 1.7; color: var(--ink-mid); }
+.p-projects { margin-top: 10px; font-size: 9px; color: var(--ink-xlight); letter-spacing: 0.05em; }
+
+/* 페이지 번호 */
+.pg-num {
+  position: absolute;
+  bottom: 18px;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-xlight);
+  z-index: 1;
+  pointer-events: none;
+}
+.page-slot-L .pg-num { left: 28px; }
+.page-slot-R .pg-num { right: 28px; }
+
+/* ── 색인 ──────────────────────────────────── */
+.pg-index {
+  width: 100%; height: 100%;
+  padding: 40px 32px;
+  background: var(--bg-2);
+  overflow: hidden;
+}
+.idx-head {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 16px;
+}
+.idx-cols { columns: 2; column-gap: 20px; }
+.idx-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 4px 2px;
+  cursor: pointer;
+  break-inside: avoid;
+  border-bottom: 1px dotted transparent;
+  transition: border-color 0.12s;
+}
+.idx-entry:hover { border-color: var(--rule); }
+.idx-name { font-family: var(--serif); font-size: 11px; color: var(--ink-mid); transition: color 0.12s; }
+.idx-entry:hover .idx-name { color: var(--ink); }
+.idx-pg { font-family: var(--display); font-style: italic; font-size: 9px; color: var(--ink-xlight); }
+
+/* ── 로딩 ──────────────────────────────────── */
+#loading-screen {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 9000;
+  transition: opacity 0.4s ease;
+}
+#loading-screen.fade-out { opacity: 0; pointer-events: none; }
+.loading-title {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.loading-sub { font-size: 11px; color: var(--ink-light); letter-spacing: 0.15em; }
+.loading-bar {
+  width: 120px; height: 1px;
+  background: var(--rule);
+  position: relative;
+  overflow: hidden;
+}
+.loading-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  animation: barSlide 1s var(--ease-flip) infinite;
+}
+@keyframes barSlide {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+/* 반응형 */
+@media (max-width: 920px) {
+  :root { --page-w: 340px; --page-h: 480px; }
+  .bv-stage { gap: 20px; }
+}
+@media (max-width: 720px) {
+  :root { --page-w: 320px; --page-h: 100%; }
+  .book-body { width: var(--page-w); }
+  .page-slot-R { display: none; }
+  .book-binding { display: none; }
+  .flip-btn { display: none; }
+  .bv-stage { gap: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- 로딩 -->
+<div id="loading-screen">
+  <div class="loading-title">책을 펼치는 중</div>
+  <div class="loading-bar"></div>
+  <div class="loading-sub" id="loading-msg">데이터 불러오는 중...</div>
+</div>
+
+<!-- 헤더 -->
+<header class="bv-header">
+  <a href="index.html" class="bv-back">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 2L4 7l5 5"/>
+    </svg>
+    서재
+  </a>
+  <div class="bv-title" id="bv-title">—</div>
+  <a href="search.html" class="bv-search-link">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <circle cx="5" cy="5" r="3.5"/><path d="M8.5 8.5l2 2"/>
+    </svg>
+    검색
+  </a>
+</header>
+
+<!-- 책 스테이지 -->
+<div class="bv-stage">
+  <button class="flip-btn" id="btn-prev" disabled>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 3L5 8l5 5"/>
+    </svg>
+  </button>
+
+  <div class="book-wrap">
+    <div class="book-body" id="book-body">
+      <div class="page-slot page-slot-L" id="slot-L">
+        <div class="page" id="page-L"></div>
+      </div>
+      <div class="book-binding"></div>
+      <div class="page-slot page-slot-R" id="slot-R">
+        <div class="page" id="page-R"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="flip-btn" id="btn-next">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 3l5 5-5 5"/>
+    </svg>
+  </button>
+</div>
+
+<!-- 하단 바 -->
+<footer class="bv-footer">
+  <div class="bv-page-dots" id="page-dots"></div>
+  <div class="bv-page-label" id="page-label">표지</div>
+</footer>
+
+<div class="kb-hint">
+  <span class="kb">←</span><span class="kb">→</span>
+  <span style="margin-left:2px">키보드</span>
+</div>
+
+<script>
+const DATA_BASE = './data';
+
+/* ── URL 파라미터 ─────────────────────────── */
+const params  = new URLSearchParams(location.search);
+const VOL_NUM = parseInt(params.get('vol') || '1', 10);
+const JUMP_TO = parseInt(params.get('page') || '0', 10); // 특정 페이지 직접 이동
+
+/* ── 상태 ────────────────────────────────── */
+let spreads  = [];   // [{L: htmlFn, R: htmlFn}, ...]
+let cur      = 0;    // 현재 spread 인덱스
+let flipping = false;
+let innovators = [];
+
+/* ── fetch ───────────────────────────────── */
+async function fetchJSON(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${url} (${res.status})`);
+  return res.json();
+}
+
+/* ── 초기화 ──────────────────────────────── */
+async function init() {
+  try {
+    document.getElementById('loading-msg').textContent = `Vol.${VOL_NUM} 불러오는 중...`;
+
+    const [volData, innData] = await Promise.all([
+      fetchJSON(`${DATA_BASE}/volumes.json`),
+      fetchJSON(`${DATA_BASE}/vol-${String(VOL_NUM).padStart(2,'0')}/innovators.json`)
+    ]);
+
+    const meta = volData.volumes.find(v => v.vol === VOL_NUM);
+    if (!meta) throw new Error(`Vol.${VOL_NUM} 메타 없음`);
+
+    innovators = innData.innovators;
+    document.getElementById('bv-title').textContent = meta.title;
+    document.title = `${meta.title} — 청도 지역혁신가`;
+
+    buildSpreads(meta, innovators);
+    buildDots();
+
+    // 특정 페이지 점프 요청 처리
+    if (JUMP_TO > 0) {
+      const target = 2 + innovators.findIndex(p => p.page === JUMP_TO);
+      cur = Math.max(0, Math.min(target, spreads.length - 1));
+    }
+
+    renderSpread(cur, false);
+    updateNav();
+
+    // 로딩 화면 제거
+    setTimeout(() => {
+      const ls = document.getElementById('loading-screen');
+      ls.classList.add('fade-out');
+      setTimeout(() => ls.remove(), 400);
+    }, 300);
+
+  } catch (err) {
+    document.getElementById('loading-msg').textContent = `오류: ${err.message}`;
+    console.error(err);
+  }
+}
+
+/* ── spreads 구성 ────────────────────────── */
+function buildSpreads(meta, list) {
+  spreads = [];
+
+  // 0: 표지 | 빈
+  spreads.push({ L: () => makeCover(meta), R: () => makeBlank() });
+
+  // 1: 목차 L | 목차 R
+  const half = Math.ceil(list.length / 2);
+  spreads.push({
+    L: () => makeToc(list.slice(0, half), '목차'),
+    R: () => makeToc(list.slice(half), null)
+  });
+
+  // 2 ~ N+1: 인물 (1인당 1 spread)
+  list.forEach(person => {
+    spreads.push({ L: () => makePersonL(person), R: () => makePersonR(person) });
+  });
+
+  // N+2: 색인 L | 색인 R
+  const sorted = [...list].sort((a, b) => a.name.localeCompare(b.name));
+  const sh = Math.ceil(sorted.length / 2);
+  spreads.push({ L: () => makeIndex(sorted.slice(0, sh)), R: () => makeIndex(sorted.slice(sh)) });
+
+  // N+3: 빈 | 뒷표지
+  spreads.push({ L: () => makeBlank(), R: () => makeBackCover(meta) });
+}
+
+/* ── 도트 네비 ───────────────────────────── */
+function buildDots() {
+  const dotsEl = document.getElementById('page-dots');
+  const total  = Math.min(spreads.length, 12);
+  dotsEl.innerHTML = Array.from({length: total}, (_, i) =>
+    `<div class="dot" data-i="${i}"></div>`).join('');
+  dotsEl.querySelectorAll('.dot').forEach(d => {
+    d.addEventListener('click', () => jumpTo(parseInt(d.dataset.i)));
+  });
+}
+function updateDots() {
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === cur || (cur >= 12 && i === 11));
+  });
+  const label = document.getElementById('page-label');
+  if (cur === 0) label.textContent = '표지';
+  else if (cur === spreads.length - 1) label.textContent = '뒷표지';
+  else if (cur === 1) label.textContent = '목차';
+  else if (cur === spreads.length - 2) label.textContent = '색인';
+  else label.textContent = `${cur - 1} / ${spreads.length - 4}`;
+}
+
+/* ── spread 렌더 (애니메이션 없이) ─────────── */
+function renderSpread(idx, animated = true, dir = 'next') {
+  if (animated) {
+    flipAnimate(idx, dir);
+  } else {
+    const sp = spreads[idx];
+    setPageContent('page-L', sp.L());
+    setPageContent('page-R', sp.R());
+    addPageNums(idx);
+  }
+}
+
+function setPageContent(id, html) {
+  document.getElementById(id).innerHTML = html;
+}
+
+function addPageNums(idx) {
+  const lEl = document.getElementById('page-L');
+  const rEl = document.getElementById('page-R');
+  // 표지·뒷표지는 번호 없음
+  if (idx === 0 || idx === spreads.length - 1) return;
+  const lNum = idx * 2 - 1;
+  const rNum = idx * 2;
+  lEl.insertAdjacentHTML('beforeend', `<div class="pg-num">${lNum}</div>`);
+  rEl.insertAdjacentHTML('beforeend', `<div class="pg-num">${rNum}</div>`);
+}
+
+/* ══════════════════════════════════════════════
+   페이지 넘김 — 모션 전용 방식
+
+   1. 새 spread 콘텐츠를 슬롯에 즉시 세팅 (레이어 뒤에 숨겨짐)
+   2. 빈 레이어가 현재 페이지처럼 올라와 fold
+   3. 레이어가 접히면서 아래의 새 페이지가 드러남
+   4. 애니메이션 완료 후 레이어 제거
+══════════════════════════════════════════════ */
+function flipAnimate(toIdx, dir) {
+  if (flipping) return;
+  flipping = true;
+
+  const bookBody = document.getElementById('book-body');
+  const lEl      = document.getElementById('page-L');
+  const rEl      = document.getElementById('page-R');
+  const sp       = spreads[toIdx];
+  const DUR      = parseFloat(getComputedStyle(document.documentElement)
+                    .getPropertyValue('--flip-dur')) * 1000 || 750;
+
+  /* 1. 새 페이지를 슬롯에 즉시 세팅 — 레이어 뒤에 가려져 있음 */
+  lEl.innerHTML = sp.L();
+  rEl.innerHTML = sp.R();
+  addPageNums(toIdx);
+
+  /* 2. 모션 전용 빈 레이어 생성 */
+  const layer = document.createElement('div');
+  layer.className = `flip-layer dir-${dir}`;
+  bookBody.appendChild(layer);
+
+  /* 3. RAF 두 번 — 레이아웃 플러시 후 transition 시작 */
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    layer.classList.add('animating');
+    layer.style.transition = `transform ${DUR}ms var(--ease-flip)`;
+    layer.style.transform  = dir === 'next' ? 'rotateY(-90deg)' : 'rotateY(90deg)';
+
+    /* 절반 지점에서 레이어 opacity fade-out — 완전히 접힌 시점에 사라짐 */
+    setTimeout(() => {
+      layer.style.transition += `, opacity ${DUR * 0.25}ms ease`;
+      layer.style.opacity = '0';
+    }, DUR * 0.55);
+
+    /* 4. 완료 후 레이어 제거 */
+    setTimeout(() => {
+      layer.remove();
+      flipping = false;
+      updateNav();
+    }, DUR + 30);
+  }));
+}
+
+/* ── 네비게이션 ──────────────────────────── */
+function updateNav() {
+  document.getElementById('btn-prev').disabled = cur === 0;
+  document.getElementById('btn-next').disabled = cur >= spreads.length - 1;
+  updateDots();
+}
+
+document.getElementById('btn-next').addEventListener('click', () => {
+  if (cur < spreads.length - 1 && !flipping) { cur++; renderSpread(cur, true, 'next'); }
+});
+document.getElementById('btn-prev').addEventListener('click', () => {
+  if (cur > 0 && !flipping) { cur--; renderSpread(cur, true, 'prev'); }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' && cur < spreads.length - 1 && !flipping) { cur++; renderSpread(cur, true, 'next'); }
+  if (e.key === 'ArrowLeft'  && cur > 0 && !flipping) { cur--; renderSpread(cur, true, 'prev'); }
+});
+
+function jumpTo(idx) {
+  if (idx === cur || flipping) return;
+  const dir = idx > cur ? 'next' : 'prev';
+  cur = idx;
+  renderSpread(cur, true, dir);
+}
+
+/* 목차·색인 클릭으로 인물 페이지 이동 */
+function jumpToPersonById(id) {
+  const idx = innovators.findIndex(p => p.id === id);
+  if (idx < 0) return;
+  jumpTo(2 + idx);
+}
+
+/* ══════════════════════════════════════════════
+   콘텐츠 생성 함수
+══════════════════════════════════════════════ */
+function makeCover(meta) {
+  return `<div class="pg-cover">
+    <div class="cv-pre">Cheongdo Local Innovators</div>
+    <div class="cv-main">
+      <div class="cv-vol">Vol.${meta.vol}</div>
+      <div class="cv-title">청도<br>지역혁신가</div>
+      <div class="cv-rule"></div>
+      <div class="cv-sub">${meta.subtitle}</div>
+    </div>
+    <div class="cv-bottom">
+      <div class="cv-count">${meta.count}인 수록</div>
+      <div class="cv-region">Cheongdo, Gyeongbuk · ${meta.published}</div>
+    </div>
+  </div>`;
+}
+
+function makeBackCover(meta) {
+  return `<div class="pg-back-cover">
+    <div class="bc-rule"></div>
+    <div class="bc-logo">청도혁신센터<small>Cheongdo Innovation Center</small></div>
+    <div class="bc-desc">청도에서 자신만의 방식으로<br>새로운 길을 만들어가는 사람들의 기록<br><br>Vol.${meta.vol} · ${meta.published}</div>
+    <div class="bc-rule"></div>
+  </div>`;
+}
+
+function makeBlank() {
+  return `<div class="pg-blank"></div>`;
+}
+
+function makeToc(list, heading) {
+  const rows = list.map(p => `
+    <li class="toc-row" onclick="jumpToPersonById('${p.id}')">
+      <span class="toc-n">${p.page}.</span>
+      <span class="toc-name">${p.name}</span>
+      <span class="toc-org">${p.org}</span>
+      <span class="toc-pg">${p.page + 1}</span>
+    </li>`).join('');
+  return `<div class="pg-toc">
+    <div class="toc-head">${heading || '&#8203;'}</div>
+    <ul class="toc-list">${rows}</ul>
+  </div>`;
+}
+
+const SNS_LABEL = { instagram:'Instagram', instagram_2:'Instagram', naver:'Naver', website:'Web', personal:'개인', youtube:'YouTube', blog:'Blog' };
+
+function makePersonL(p) {
+  const snsHTML = Object.entries(p.sns || {}).map(([k, v]) =>
+    `<a class="p-sns-link" href="${v}" target="_blank" rel="noopener">${SNS_LABEL[k] || k}</a>`
+  ).join('');
+  return `<div class="pg-person-l">
+    <div class="p-photo">
+      <div class="p-photo-init"><span>${p.name[0]}</span></div>
+    </div>
+    <div class="p-info">
+      <div class="p-seq">No. ${String(p.page).padStart(2,'0')}</div>
+      <div class="p-name">${p.name}</div>
+      <div class="p-org">${p.org}</div>
+      <div class="p-divider"></div>
+      ${p.short_bio ? `<div class="p-short-bio">${p.short_bio}</div>` : ''}
+      ${p.region ? `<div class="p-meta-row"><span class="p-meta-key">지역</span><span class="p-meta-val">${p.region}</span></div>` : ''}
+      ${p.group  ? `<div class="p-meta-row"><span class="p-meta-key">구분</span><span class="p-meta-val">${p.group}</span></div>` : ''}
+      <div class="p-domains">${(p.domains||[]).map(d=>`<span class="p-domain-tag">${d}</span>`).join('')}</div>
+      ${snsHTML ? `<div class="p-sns">${snsHTML}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+/* story 필드 파싱: "레이블: 내용" 패턴 → 섹션 배열 */
+const STORY_KEYS = [
+  { key: '귀촌 계기',   label: 'Background' },
+  { key: '정착 어려움', label: 'Challenge'  },
+  { key: '도움 가능',   label: 'Offering'   },
+  { key: '비전',        label: 'Vision'     },
+];
+const QUOTE_KEY = '청도란';
+
+function parseStory(raw) {
+  if (!raw) return { sections: [], quote: '' };
+  const sections = [];
+  let quote = '';
+  const allKeys = [...STORY_KEYS.map(s => s.key), QUOTE_KEY];
+  allKeys.forEach((key, i) => {
+    const start = raw.indexOf(key + ':');
+    if (start < 0) return;
+    const after = start + key.length + 1;
+    let end = raw.length;
+    for (let j = i + 1; j < allKeys.length; j++) {
+      const nx = raw.indexOf(allKeys[j] + ':');
+      if (nx > start) { end = nx; break; }
+    }
+    const val = raw.slice(after, end).trim().replace(/\.$/, '');
+    if (key === QUOTE_KEY) {
+      quote = val;
+    } else {
+      const meta = STORY_KEYS.find(s => s.key === key);
+      if (meta) sections.push({ label: meta.label, key, val });
+    }
+  });
+  if (sections.length === 0 && raw.trim()) {
+    sections.push({ label: 'Story', key: '', val: raw.trim() });
+  }
+  return { sections, quote };
+}
+
+function makePersonR(p) {
+  const { sections, quote } = parseStory(p.story);
+  const sectionsHTML = sections.map(s => `
+    <div class="p-story-section">
+      <span class="p-section-key">${s.label}</span>
+      <span class="p-section-val">${s.val}</span>
+    </div>`).join('');
+
+  return `<div class="pg-person-r">
+    <div class="p-story-label">Story</div>
+    ${p.tagline ? `<div class="p-tagline">"${p.tagline}"</div>` : ''}
+    <div class="p-story-sections">
+      ${sectionsHTML || `<div class="p-section-val">스토리가 준비 중입니다.</div>`}
+    </div>
+    ${quote ? `<div class="p-quote-block">
+      <div class="p-quote-label">나에게 청도란</div>
+      <div class="p-quote-text">"${quote}"</div>
+    </div>` : ''}
+    ${p.activity ? `<div class="p-activity-block">
+      <div class="p-activity-label">주요 활동</div>
+      <div class="p-activity-text">${p.activity}</div>
+    </div>` : ''}
+    ${p.projects ? `<div class="p-projects">참여 · ${p.projects}</div>` : ''}
+  </div>`;
+}
+
+function makeIndex(list) {
+  const entries = list.map(p => `
+    <div class="idx-entry" onclick="jumpToPersonById('${p.id}')">
+      <span class="idx-name">${p.name}</span>
+      <span class="idx-pg">${p.page + 1}</span>
+    </div>`).join('');
+  return `<div class="pg-index">
+    <div class="idx-head">색인 · Index</div>
+    <div class="idx-cols">${entries}</div>
+  </div>`;
+}
+
+init();
+</script>
+</body>
+</html>
