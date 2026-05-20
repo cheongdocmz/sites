@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>문의하기 — 청도혁신센터 × 상상마루</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --earth: #0A0A0A;
+    --bark: #444444;
+    --fog: #AAAAAA;
+    --mist: #E0E0E0;
+    --bg: #F7F7F7;
+    --serif: 'Noto Serif KR', serif;
+    --sans: 'Noto Sans KR', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--earth);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── 네비게이션 ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 64px;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--serif); font-size: 14px; font-weight: 600;
+    color: var(--earth); text-decoration: none; letter-spacing: -0.01em;
+  }
+  .nav-sep { width: 1px; height: 14px; background: var(--fog); }
+  .nav-badge { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; color: var(--bark); text-transform: uppercase; }
+  .nav-back {
+    font-size: 13px; color: var(--bark); text-decoration: none;
+    letter-spacing: 0.02em; transition: color 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-back:hover { color: var(--earth); }
+
+  /* ── 페이지 레이아웃 ── */
+  .page-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 112px 24px 80px;
+  }
+
+  .page-label {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--fog); font-weight: 500; margin-bottom: 12px;
+  }
+  .page-title {
+    font-family: var(--serif); font-size: 32px; font-weight: 700;
+    color: var(--earth); letter-spacing: -0.02em; line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .page-sub {
+    font-size: 14px; color: var(--bark); line-height: 1.75;
+    margin-bottom: 48px;
+  }
+
+  /* ── 폼 ── */
+  .form-card {
+    background: #FFFFFF;
+    border: 1px solid var(--mist);
+    border-radius: 6px;
+    padding: 40px;
+  }
+
+  .form-section-label {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--fog); font-weight: 500;
+    margin-bottom: 20px; margin-top: 32px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #F0F0F0;
+  }
+  .form-section-label:first-child { margin-top: 0; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .form-group {
+    display: flex; flex-direction: column; gap: 6px;
+    margin-bottom: 16px;
+  }
+  .form-group:last-child { margin-bottom: 0; }
+
+  label {
+    font-size: 12px; font-weight: 600; color: var(--earth);
+    letter-spacing: 0.02em;
+  }
+  .label-optional {
+    font-size: 11px; font-weight: 400; color: var(--fog);
+    margin-left: 4px; letter-spacing: 0;
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  select,
+  textarea {
+    width: 100%;
+    font-family: var(--sans); font-size: 14px; color: var(--earth);
+    background: #FAFAFA;
+    border: 1px solid #E0E0E0;
+    border-radius: 3px;
+    padding: 10px 14px;
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--earth);
+    background: #FFFFFF;
+  }
+  input::placeholder, textarea::placeholder { color: #BBBBBB; }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+  select option[value=""] { color: #BBBBBB; }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.7;
+  }
+
+  /* 제출 버튼 */
+  .form-footer {
+    margin-top: 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .form-notice {
+    font-size: 12px; color: var(--fog); line-height: 1.6;
+  }
+  .submit-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--earth); color: #FFFFFF;
+    font-family: var(--sans); font-size: 13px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 13px 28px; border-radius: 3px;
+    border: none; cursor: pointer;
+    transition: all 0.25s; white-space: nowrap;
+  }
+  .submit-btn:hover { background: #333333; transform: translateY(-1px); }
+
+  /* 완료 메시지 */
+  .success-msg {
+    display: none;
+    background: #FFFFFF; border: 1px solid var(--mist);
+    border-radius: 6px; padding: 48px 40px;
+    text-align: center;
+  }
+  .success-msg.show { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .success-icon { font-size: 32px; margin-bottom: 16px; }
+  .success-title {
+    font-family: var(--serif); font-size: 22px; font-weight: 700;
+    color: var(--earth); margin-bottom: 10px;
+  }
+  .success-body { font-size: 14px; color: var(--bark); line-height: 1.75; margin-bottom: 28px; }
+  .success-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 600; color: var(--earth);
+    text-decoration: none; letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--earth); padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+  .success-back:hover { opacity: 0.6; }
+
+  footer {
+    background: var(--earth); padding: 36px 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px; margin-top: 80px;
+  }
+  .footer-brand { font-family: var(--serif); font-size: 14px; font-weight: 600; color: #FFFFFF; }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 20px; }
+    .page-wrap { padding: 96px 20px 60px; }
+    .form-card { padding: 28px 20px; }
+    .form-row { grid-template-columns: 1fr; }
+    .form-footer { flex-direction: column; align-items: stretch; }
+    .submit-btn { justify-content: center; }
+    footer { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">
+    청도혁신센터
+    <span class="nav-sep"></span>
+    상상마루
+    <span class="nav-badge">컨설턴트</span>
+  </a>
+  <a class="nav-back" href="index.html">← 메인으로</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-label">Contact</div>
+  <h1 class="page-title">컨설팅 문의</h1>
+  <p class="page-sub">
+    아래 양식을 작성하시면 입력하신 메일로 담당자에게 바로 전달됩니다.<br>
+    보통 4~5 영업일 내로 회신드립니다.
+  </p>
+
+  <!-- 폼 카드 -->
+  <div class="form-card" id="form-card">
+
+    <!-- 기본 정보 -->
+    <div class="form-section-label">기본 정보</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">이름 / 담당자명</label>
+        <input type="text" id="name" placeholder="홍길동" required>
+      </div>
+      <div class="form-group">
+        <label for="tel">연락처</label>
+        <input type="tel" id="tel" placeholder="010-0000-0000" maxlength="13" required oninput="formatTel(this)">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">이메일</label>
+      <input type="email" id="email" placeholder="example@email.com" required>
+    </div>
+
+    <div class="form-group">
+      <label for="org">기관명 / 상호명</label>
+      <input type="text" id="org" placeholder="청도 ○○협동조합" required>
+    </div>
+
+    <!-- 사업 정보 -->
+    <div class="form-section-label">사업 정보</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="field">컨설팅 분야</label>
+        <select id="field" onchange="filterConsultants(this.value)">
+          <option value="">선택해주세요</option>
+          <option>세무·회계·노무</option>
+          <option>법인 설립·사회적경제</option>
+          <option>지식재산</option>
+          <option>마케팅·콘텐츠</option>
+          <option>농식품·유통</option>
+          <option>F&amp;B·숙박</option>
+          <option>관광·문화</option>
+          <option>교육·돌봄</option>
+          <option>기타</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="stage">사업 단계</label>
+        <select id="stage">
+          <option value="">선택해주세요</option>
+          <option>예비 창업 (아이디어 단계)</option>
+          <option>초기 창업 (1년 미만)</option>
+          <option>성장기 (1~3년)</option>
+          <option>안정기 (3년 이상)</option>
+          <option>재도약 / 전환</option>
+        </select>
+      </div>
+    </div>
+<!--
+    <div class="form-group">
+      <label for="consultant">희망 컨설턴트 <span class="label-optional">(선택)</span></label>
+      <select id="consultant" disabled>
+        <option value="">컨설팅 분야를 먼저 선택해주세요</option>
+      </select>
+    </div>
+-->
+    <!-- 문의 내용 -->
+    <div class="form-section-label">문의 내용</div>
+
+    <div class="form-group">
+      <label for="message">문의 내용</label>
+      <textarea id="message" placeholder="현재 상황, 컨설팅이 필요한 이유, 궁금한 점 등을 자세하게 작성해 주세요." required></textarea>
+    </div>
+
+    <div class="form-footer">
+      <p class="form-notice">
+        제출하면 담당자에게 알림이 전송되고<br>
+        입력하신 이메일로 접수 확인 메일이 발송됩니다.
+      </p>
+      <button class="submit-btn" id="submit-btn" onclick="submitForm()">
+        <span id="btn-text">문의 접수하기 →</span>
+        <span id="btn-loading" style="display:none;">전송 중...</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- 완료 메시지 (mailto 실행 후 표시) -->
+  <div class="success-msg" id="success-msg">
+    <div class="success-icon">✉</div>
+    <div class="success-title">메일이 전송되었습니다</div>
+    <p class="success-body">
+      접수확인 메일을 확인해주세요.<br>
+      담당자 및 컨설턴트 확인 후 다시 회신드리겠습니다.
+    </p>
+    <a class="success-back" href="index.html">← 메인으로 돌아가기</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-brand">청도혁신센터 × 상상마루</div>
+  <div class="footer-copy">© 2025 Cheongdo Innovation Center × Sangsangmaru</div>
+</footer>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxzSr8NP46_ibDfQSzxNamUfZBCaBe8lBansbPsJ6Sd4x4pDYNXLYelmXNwjkmAvzv9/exec';
+
+function formatTel(input) {
+  let v = input.value.replace(/[^0-9]/g, '');
+  if (v.startsWith('02')) {
+    if (v.length < 6)       v = v;
+    else if (v.length < 10) v = v.slice(0,2) + '-' + v.slice(2,5) + '-' + v.slice(5);
+    else                    v = v.slice(0,2) + '-' + v.slice(2,6) + '-' + v.slice(6,10);
+  } else {
+    if (v.length < 4)       v = v;
+    else if (v.length < 7)  v = v.slice(0,3) + '-' + v.slice(3);
+    else if (v.length < 11) v = v.slice(0,3) + '-' + v.slice(3,6) + '-' + v.slice(6);
+    else                    v = v.slice(0,3) + '-' + v.slice(3,7) + '-' + v.slice(7,11);
+  }
+  input.value = v;
+}
+
+function submitForm() {
+  const name    = document.getElementById('name').value.trim();
+  const tel     = document.getElementById('tel').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const org     = document.getElementById('org').value.trim();
+  const field   = document.getElementById('field').value;
+  const stage   = document.getElementById('stage').value;
+  const message = document.getElementById('message').value.trim();
+
+  if (!name || !tel || !email || !org || !message) {
+    alert('이름, 연락처, 이메일, 기관명, 문의 내용은 필수 항목입니다.');
+    return;
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  document.getElementById('btn-text').style.display    = 'none';
+  document.getElementById('btn-loading').style.display = 'inline';
+
+  const payload = { name, tel, email, org, field, stage, message };
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function() {
+    document.getElementById('form-card').style.display = 'none';
+    document.getElementById('success-msg').classList.add('show');
+  })
+  .catch(function(err) {
+    console.error(err);
+    alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    btn.disabled = false;
+    document.getElementById('btn-text').style.display    = 'inline';
+    document.getElementById('btn-loading').style.display = 'none';
+  });
+}
+</script>
+</body>
+</html>
