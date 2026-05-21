@@ -1180,7 +1180,7 @@ function buildShelf() {
     const div = document.createElement('div');
     div.className = 'shelf-row';
     div.innerHTML = row.map((v, i) => `
-      <div class="book-card" style="animation-delay:${(ri*2+i)*0.1}s" onclick="gotoView('map')">
+      <div class="book-card" style="animation-delay:${(ri*2+i)*0.1}s" onclick="location.href='book.html?vol=${v.vol}'">
         <div class="book-3d">
           <div class="book-spine"></div>
           <div class="book-face" style="background:${v.cover_color||'#0d0d0d'}">
@@ -1231,7 +1231,7 @@ function makeVolBlock(vol, persons) {
     <div class="vol-block-header">
       <div class="vol-book-side">
         <div class="vol-book-3d-wrap">
-          <div class="vol-book-3d" onclick="gotoView('map')">
+          <div class="vol-book-3d" onclick="location.href='book.html?vol=${v.vol}'">
             <div class="vol-book-spine"></div>
             <div class="vol-book-face" style="background:${vol.cover_color||'#0d0d0d'}">
               <div class="vbk-vol">Vol.${vol.vol}</div>
