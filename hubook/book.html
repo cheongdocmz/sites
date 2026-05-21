@@ -1148,17 +1148,19 @@ function makeToc(list, heading) {
 
 const SNS_LABEL = { instagram:'Instagram', instagram_2:'Instagram', naver:'Naver', website:'Web', personal:'개인', youtube:'YouTube', blog:'Blog' };
 
+function nameToFile(name) {
+  return name.trim().replace(/\s+/g, '-');
+}
+
 function makePersonL(p) {
   const snsHTML = Object.entries(p.sns || {}).map(([k, v]) =>
     `<a class="p-sns-link" href="${v}" target="_blank" rel="noopener">${SNS_LABEL[k] || k}</a>`
   ).join('');
   return `<div class="pg-person-l">
     <div class="p-photo">
-      ${p.photo
-        ? `<img src="${p.photo}" alt="${p.name}" loading="lazy"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-        : ''}
-      <div class="p-photo-init" style="${p.photo ? 'display:none' : ''}">
+      <img src="images/vol-01/${nameToFile(p.name)}.jpg" alt="${p.name}" loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="p-photo-init" style="display:none">
         <span>${p.name[0]}</span>
       </div>
     </div>
