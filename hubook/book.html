@@ -1158,7 +1158,7 @@ function makePersonL(p) {
   ).join('');
   return `<div class="pg-person-l">
     <div class="p-photo">
-      <img src="images/vol-01/${nameToFile(p.name)}.jpg" alt="${p.name}" loading="lazy"
+      <img src="images/vol-${String(VOL_NUM).padStart(2,'0')}/${nameToFile(p.name)}.jpg" alt="${p.name}" loading="lazy"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="p-photo-init" style="display:none">
         <span>${p.name[0]}</span>
