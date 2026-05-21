@@ -1154,7 +1154,13 @@ function makePersonL(p) {
   ).join('');
   return `<div class="pg-person-l">
     <div class="p-photo">
-      <div class="p-photo-init"><span>${p.name[0]}</span></div>
+      ${p.photo
+        ? `<img src="${p.photo}" alt="${p.name}" loading="lazy"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+        : ''}
+      <div class="p-photo-init" style="${p.photo ? 'display:none' : ''}">
+        <span>${p.name[0]}</span>
+      </div>
     </div>
     <div class="p-info">
       <div class="p-seq">No. ${String(p.page).padStart(2,'0')}</div>
