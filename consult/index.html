@@ -344,6 +344,7 @@
   }
   .panel-career { font-size: 13px; color: rgba(0,0,0,0.6); line-height: 1.75; margin-bottom: 16px; }
   .panel-career p { margin-bottom: 4px; }
+  .panel-career-prefix { color: rgba(0,0,0,0.3); font-size: 11px; margin-right: 4px; }
   .panel-keywords { display: flex; flex-wrap: wrap; gap: 6px; }
   .panel-keyword {
     font-size: 12px; padding: 4px 10px;
@@ -983,14 +984,12 @@ function renderCards(list) {
         <span class="card-arrow">›</span>
       </div>
       <div class="card-panel" id="panel-${c.id}">
+        ${c.career && c.career.length ? `
         <div class="panel-section-label">경력</div>
         <div class="panel-career">
-          ${orgLines.map(l => `<p>${l.replace(/^(현|전)\)\s*/, '<span style="color:rgba(0,0,0,0.3);font-size:11px;margin-right:4px;">$1)</span>')}</p>`).join('')}
+          ${c.career.map(l => `<p>${l.replace(/^(현|전)\)\s*/, '<span class="panel-career-prefix">$1)</span> ')}</p>`).join('')}
         </div>
-        <div class="panel-section-label">전문 분야</div>
-        <div class="panel-keywords">
-          ${c.keywords.map(k => `<span class="panel-keyword">${k}</span>`).join('')}
-        </div>
+        ` : ''}
       </div>
     `;
 
