@@ -304,7 +304,6 @@
       <textarea id="message" placeholder="현재 상황, 컨설팅이 필요한 이유, 궁금한 점 등을 자세하게 작성해 주세요." required></textarea>
     </div>
 
-    <!-- honeypot: 봇 감지용 숨김 필드 — 절대 수정 금지 -->
     <input type="text" id="hp-name" name="hp-name"
            style="position:absolute;left:-9999px;opacity:0;pointer-events:none;"
            tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -341,8 +340,7 @@
 </footer>
 
 <script>
-const SCRIPT_URL = 'REPLACE_WITH_APPS_SCRIPT_URL'; // TODO: 배포 후 수기 입력
-
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz883GOa8VVieFC3W_NvixPBn_etgU27aEXVvnAp0fLtVK-864KfuLzrLDtKp6xtq8/exec'; 
 /* ── 전화번호 포맷 ── */
 function formatTel(input) {
   let v = input.value.replace(/[^0-9]/g, '');
