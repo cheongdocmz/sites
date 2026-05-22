@@ -5,17 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>청도혁신센터 × 상상마루 컨설턴트</title>
 <link rel="icon" type="image/png" href="favicon.png">
-
-<!-- ✅ 수정1: fonts.gstatic.com preconnect 추가 (폰트 woff2 다운로드 속도 개선) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<!-- ✅ 수정2: hero.webp preload 추가 (LCP 이미지 우선 로드) -->
 <link rel="preload" as="image" href="images_800x800/hero.webp">
-
-<!-- ✅ 수정3: Noto Serif KR 제거 → Sans KR 단일 사용으로 woff2 요청 수 절반 감소 -->
-<!-- 기존: Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;600 (woff2 23개) -->
-<!-- 변경: Noto+Sans+KR:wght@300;400;500;600;700 (woff2 약 12개) -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -30,13 +22,11 @@
     --sand: #CCCCCC;
     --mist: #E0E0E0;
     --fog: #AAAAAA;
-    /* ✅ 수정4: --serif를 sans로 통일 (폰트 단일화에 맞춰) */
-    --serif: 'Noto Sans KR', sans-serif;
-    --sans: 'Noto Sans KR', sans-serif;
+    --serif: 'Noto Sans KR';
+    --sans: 'Noto Sans KR';
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  /* ✅ 수정5: scroll-behavior를 html 전체 대신 필요한 요소에만 적용 */
   html { }
 
   body {
@@ -306,7 +296,6 @@
     object-position: center top;
     display: block;
   }
-  /* ✅ 수정6: CLS 방지용 placeholder 스타일 */
   .card-avatar img.loading {
     background: #E8E8E8;
   }
@@ -556,7 +545,6 @@
         청도혁신센터와 상상마루가 함께 구성한 <br>20인의 현장 전문가 네트워크<br><br>
         세무·법인 설립부터 F&B·관광·교육까지, <br>당신의 사업 기간에 맞는 전문가를 연결합니다
       </p>
-      <!-- ✅ 수정7: href 앵커 스크롤에 scroll-behavior 적용 (html 전체 대신) -->
       <a class="hero-cta" href="#consultants" onclick="smoothScrollTo('consultants')">
         전문가 찾아보기 <span class="hero-cta-arrow">→</span>
       </a>
@@ -599,7 +587,6 @@
   <div class="intro">
     <div class="intro-img-wrap">
       <div class="slideshow-container" id="slideshow">
-        <!-- ✅ 수정8: 첫 슬라이드 eager, 두번째 lazy -->
         <img class="slide-img" src="images_800x800/activity.webp" alt="활동 사진 1" loading="eager" style="opacity:1;" width="1200" height="900">
         <img class="slide-img" src="images_800x800/activity2.webp" alt="활동 사진 2" loading="lazy" style="opacity:0;" width="1200" height="900">
       </div>
@@ -815,12 +802,7 @@
   <div class="footer-copy">© 2025 Cheongdo Innovation Center × Sangsangmaru</div>
 </footer>
 
-<!-- ✅ 수정9: Cloudflare email-decode.min.js 완전 제거 (503 에러, 불필요) -->
-
 <script>
-// ──────────────────────────────────────────────
-//  ✅ 수정10: 스무스 스크롤 (html scroll-behavior 제거 대신 JS로 처리)
-// ──────────────────────────────────────────────
 function smoothScrollTo(id) {
   const el = document.getElementById(id);
   if (el) {
@@ -828,9 +810,6 @@ function smoothScrollTo(id) {
   }
 }
 
-// ──────────────────────────────────────────────
-//  FAQ 탭 전환 + 아코디언
-// ──────────────────────────────────────────────
 function switchFaqTab(btn, panelId) {
   document.querySelectorAll('.faq-tab').forEach(function(t) {
     t.classList.remove('active');
@@ -958,7 +937,6 @@ function orgToLines(org) {
   return org.split('\n').map(l => l.trim()).filter(Boolean);
 }
 
-// ✅ 수정11: 이미지 로드 실패 처리를 이벤트리스너로 변경 + 첫 페이지 eager/나머지 lazy 분기
 function setupCardImage(img, placeholder) {
   img.addEventListener('error', function() {
     img.style.display = 'none';
@@ -983,7 +961,6 @@ function renderCards(list) {
     const orgLines = orgToLines(c.org);
     const imgSrc = getImgSrc(c);
 
-    // ✅ 수정12: 첫 페이지 첫 4개는 eager, 나머지 lazy
     const loadingAttr = (currentPage === 1 && idx < 4) ? 'eager' : 'lazy';
 
     el.innerHTML = `
@@ -1017,7 +994,6 @@ function renderCards(list) {
       </div>
     `;
 
-    // ✅ 수정13: onerror 인라인 제거 → addEventListener로 처리
     const img = el.querySelector('img');
     const placeholder = el.querySelector('.photo-placeholder');
     setupCardImage(img, placeholder);
