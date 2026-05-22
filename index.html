@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CommonzHub — 청도혁신센터 디지털 플랫폼</title>
+<meta name="description" content="청도혁신센터가 운영하는 디지털 서비스 모음. 컨설팅, 지역혁신가 아카이브 등 다양한 서비스를 만나보세요.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://commonzhub.kr/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CommonzHub — 청도혁신센터 디지털 플랫폼">
+<meta property="og:description" content="청도혁신센터가 운영하는 디지털 서비스 모음">
+<meta property="og:url" content="https://commonzhub.kr/">
+<meta property="og:locale" content="ko_KR">
+<link rel="icon" type="image/png" href="sites/consult/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ── 라이트 팔레트 (순수 흑백 계열) ── */
+    --black:        #000000;
+    --earth:        #111111;
+    --bark:         #333333;   /* 보조 텍스트 — 더 진하게 */
+    --fog:          #666666;   /* 비활성, 레이블 — 더 진하게 */
+    --mist:         #DDDDDD;   /* 테두리 */
+    --bg:           #FFFFFF;
+    --white:        #FFFFFF;
+    --card-bg:      #111111;   /* 카드 배경 — 검정 */
+    --card-text:    #FFFFFF;   /* 카드 위 텍스트 — 흰색 */
+    --card-sub:     #AAAAAA;   /* 카드 보조 텍스트 */
+    --card-border:  #2A2A2A;   /* 카드 테두리 */
+    --tag-bg:       #FFFFFF;   /* 태그 배경 — 흰색 */
+    --tag-text:     #111111;   /* 태그 텍스트 — 검정 */
+    --tag-border:   #DDDDDD;   /* 태그 테두리 */
+
+    /* ── 다크 섹션 위 텍스트 ── */
+    --on-dark-hi:   #EEEEEE;
+    --on-dark-mid:  #AAAAAA;
+    --on-dark-low:  #777777;
+    --on-dark-line: #2A2A2A;
+    --on-dark-nav:  #1E1E1E;
+    --on-dark-brand:#999999;
+    --on-dark-copy: #555555;
+
+    /* ── 투명도 오버레이 ── */
+    --nav-bg:       rgba(255,255,255,0.92);
+    --nav-border:   rgba(0,0,0,0.08);
+    --shadow-card:  rgba(0,0,0,0.15);
+
+    /* ── 타이포 ── */
+    --sans:         'Noto Sans KR';
+    --serif:        'Noto Serif KR', serif;
+
+    --card-hover-border: #444444;  /* 카드 hover 테두리 */
+    --badge-border: #333333;       /* 배지 테두리 */
+    --arrow-color:  #444444;       /* 화살표 기본 */
+    --coming-bg:    #1A1A1A;       /* coming 카드 배경 */
+    --coming-border:#333333;       /* coming 카드 테두리 */
+    --coming-text:  #555555;       /* coming 카드 제목 */
+    --coming-label: #666666;       /* coming 라벨 */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--earth);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── 네비게이션 ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 64px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--nav-border);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 15px; font-weight: 700;
+    color: var(--earth); text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-logo span {
+    font-family: var(--sans);
+    font-size: 11px; font-weight: 400;
+    color: var(--fog); margin-left: 10px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .nav-link {
+    font-size: 12px; color: var(--bark);
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--earth); }
+
+  /* ── 히어로 ── */
+  .hero {
+    padding: 160px 48px 100px;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+  .hero-label {
+    font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--fog);
+    font-weight: 500; margin-bottom: 20px;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 700; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--earth);
+    margin-bottom: 24px;
+  }
+  .hero-title em {
+    font-style: normal;
+    position: relative; display: inline-block;
+  }
+  .hero-title em::after {
+    content: '';
+    position: absolute; bottom: 2px; left: 0; right: 0;
+    height: 3px; background: var(--earth); opacity: 0.15;
+  }
+  .hero-desc {
+    font-size: 15px; color: var(--bark);
+    line-height: 1.8; max-width: 420px;
+  }
+  .hero-right {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .hero-stat {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+    padding: 24px 28px;
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .hero-stat-num {
+    font-family: var(--serif);
+    font-size: 32px; font-weight: 700;
+    color: var(--white); letter-spacing: -0.02em;
+  }
+  .hero-stat-label {
+    font-size: 13px; color: var(--card-sub);
+  }
+
+  /* ── 구분선 ── */
+  .divider {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 48px;
+    border-top: 1px solid var(--mist);
+  }
+
+  /* ── 사이트 목록 ── */
+  .sites-section {
+    max-width: 1100px; margin: 0 auto;
+    padding: 80px 48px;
+  }
+  .section-header {
+    display: flex; align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  .section-label {
+    font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--fog);
+    font-weight: 500;
+  }
+  .section-count {
+    font-size: 12px; color: var(--fog);
+  }
+  .sites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  /* ── 사이트 카드 ── */
+  .site-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+    padding: 32px;
+    text-decoration: none; color: var(--card-text);
+    display: flex; flex-direction: column;
+    gap: 20px;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .site-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: var(--white);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .site-card:hover {
+    border-color: var(--card-hover-border);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px var(--shadow-card);
+  }
+  .site-card:hover::before { transform: scaleX(1); }
+
+  .card-top {
+    display: flex; align-items: flex-start;
+    justify-content: space-between;
+  }
+  .card-badge {
+    font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; font-weight: 600;
+    color: var(--card-sub);
+    background: transparent;
+    border: 1px solid var(--badge-border);
+    padding: 4px 10px; border-radius: 2px;
+  }
+  .card-arrow {
+    font-size: 16px; color: var(--arrow-color);
+    transition: color 0.2s, transform 0.2s;
+  }
+  .site-card:hover .card-arrow {
+    color: var(--white); transform: translate(2px, -2px);
+  }
+  .card-body { flex: 1; }
+  .card-name {
+    font-family: var(--serif);
+    font-size: 20px; font-weight: 700;
+    color: var(--card-text); letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .card-desc {
+    font-size: 13px; color: var(--card-sub);
+    line-height: 1.7;
+  }
+  .card-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .card-tag {
+    font-size: 11px;
+    color: var(--tag-text);
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    padding: 3px 9px; border-radius: 2px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── 추가 예정 카드 ── */
+  .site-card.coming {
+    border-style: dashed;
+    border-color: var(--coming-border);
+    background: var(--coming-bg);
+    cursor: default;
+    pointer-events: none;
+  }
+  .site-card.coming:hover { transform: none; box-shadow: none; }
+  .site-card.coming::before { display: none; }
+  .coming-label {
+    font-size: 12px; color: var(--coming-label);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-top: auto;
+  }
+
+  /* ── 기관 소개 (다크) ── */
+  .about-section {
+    background: var(--earth);
+    padding: 80px 48px;
+  }
+  .about-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+  }
+  .about-label {
+    font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--on-dark-low);
+    font-weight: 500; margin-bottom: 20px;
+  }
+  .about-title {
+    font-family: var(--serif);
+    font-size: 28px; font-weight: 700;
+    color: var(--white); letter-spacing: -0.01em;
+    line-height: 1.4; margin-bottom: 20px;
+  }
+  .about-desc {
+    font-size: 14px; color: var(--on-dark-mid);
+    line-height: 1.85;
+  }
+  .about-info {
+    display: flex; flex-direction: column;
+    margin-top: 8px;
+  }
+  .about-row {
+    display: flex;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--on-dark-line);
+  }
+  .about-row:first-child { border-top: 1px solid var(--on-dark-line); }
+  .about-key {
+    font-size: 11px; color: var(--on-dark-low);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    width: 80px; flex-shrink: 0; padding-top: 1px;
+  }
+  .about-val {
+    font-size: 13px; color: var(--on-dark-hi);
+    line-height: 1.6;
+  }
+  .about-val a {
+    color: var(--on-dark-hi);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── 푸터 ── */
+  footer {
+    background: var(--earth);
+    border-top: 1px solid var(--on-dark-nav);
+    padding: 28px 48px;
+    display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-brand {
+    font-family: var(--serif);
+    font-size: 13px; font-weight: 600;
+    color: var(--on-dark-brand);
+  }
+  .footer-copy {
+    font-size: 11px; color: var(--on-dark-copy);
+  }
+
+  /* ── 페이드인 애니메이션 ── */
+  .fade-up {
+    opacity: 0; transform: translateY(16px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up:nth-child(1) { animation-delay: 0.1s; }
+  .fade-up:nth-child(2) { animation-delay: 0.2s; }
+  .fade-up:nth-child(3) { animation-delay: 0.3s; }
+  .fade-up:nth-child(4) { animation-delay: 0.4s; }
+
+  /* ── 반응형 ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 120px 20px 60px;
+      gap: 40px;
+    }
+    .hero-right { flex-direction: row; }
+    .hero-stat { flex: 1; }
+    .divider { padding: 0 20px; }
+    .sites-section { padding: 60px 20px; }
+    .sites-grid { grid-template-columns: 1fr; }
+    .about-section { padding: 60px 20px; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 24px 20px; }
+  }
+  @media (max-width: 480px) {
+    .hero-right { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    CommonzHub
+    <span>청도혁신센터</span>
+  </a>
+  <a class="nav-link" href="https://cmz054.kr" target="_blank" rel="noopener">청도혁신센터 →</a>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hero-label fade-up">Digital Platform</div>
+    <h1 class="hero-title fade-up">
+      청도의 혁신을<br>
+      <em>디지털로</em> 잇다
+    </h1>
+    <p class="hero-desc fade-up">
+      청도혁신센터가 운영하는 디지털 서비스 모음입니다.<br>
+      컨설팅 연결부터 지역 혁신가 아카이브까지,<br>
+      청도의 이야기를 담습니다.
+    </p>
+  </div>
+  <div class="hero-right fade-up">
+    <div class="hero-stat">
+      <span class="hero-stat-num">2</span>
+      <span class="hero-stat-label">운영 중인 서비스</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">20+</span>
+      <span class="hero-stat-label">전문 컨설턴트</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="sites-section">
+  <div class="section-header">
+    <span class="section-label">Services</span>
+    <span class="section-count" id="site-count"></span>
+  </div>
+  <div class="sites-grid" id="sites-grid">
+
+    <a class="site-card fade-up" href="/consult/">
+      <div class="card-top">
+        <span class="card-badge">Consulting</span>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">상상마루 컨설팅</div>
+        <p class="card-desc">청도 지역 창업·경영 전문 컨설턴트 20인과 함께하는 1:1 컨설팅 연결 서비스</p>
+      </div>
+      <div class="card-tags">
+        <span class="card-tag">창업</span>
+        <span class="card-tag">경영</span>
+        <span class="card-tag">마케팅</span>
+        <span class="card-tag">세무·회계</span>
+      </div>
+    </a>
+
+    <a class="site-card fade-up" href="/hubook/">
+      <div class="card-top">
+        <span class="card-badge">Archive</span>
+        <span class="card-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">지역혁신가 아카이브</div>
+        <p class="card-desc">청도에서 새로운 삶을 개척하는 지역혁신가들의 이야기를 담은 디지털 아카이브</p>
+      </div>
+      <div class="card-tags">
+        <span class="card-tag">혁신가</span>
+        <span class="card-tag">귀촌</span>
+        <span class="card-tag">청도</span>
+      </div>
+    </a>
+
+    <div class="site-card coming">
+      <div class="card-top">
+        <span class="card-badge">Dev</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name" style="color:var(--coming-text);">조달청 사업 자동추천</div>
+        <p class="card-desc" style="color:var(--coming-label);">조달청 API 기반 맞춤형 사업 자동 추천 시스템. 기업 정보를 입력하면 적합한 공공사업을 자동으로 매칭합니다.</p>
+      </div>
+      <div class="card-tags">
+        <span class="card-tag" style="border-color:var(--coming-border);color:var(--coming-label);">조달청 API</span>
+        <span class="card-tag" style="border-color:var(--coming-border);color:var(--coming-label);">공공사업</span>
+        <span class="card-tag" style="border-color:var(--coming-border);color:var(--coming-label);">자동매칭</span>
+      </div>
+      <span class="coming-label">— 개발 중</span>
+    </div>
+
+    <div class="site-card coming">
+      <div class="card-top">
+        <span class="card-badge">Dev</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name" style="color:var(--coming-text);">청도 로컬크리에이터 커뮤니티</div>
+        <p class="card-desc" style="color:var(--coming-label);">청도 지역 로컬크리에이터들의 네트워킹과 협업을 위한 온라인 커뮤니티 플랫폼입니다.</p>
+      </div>
+      <div class="card-tags">
+        <span class="card-tag" style="border-color:var(--coming-border);color:var(--coming-label);">로컬크리에이터</span>
+        <span class="card-tag" style="border-color:var(--coming-border);color:var(--coming-label);">커뮤니티</span>
+        <span class="card-tag" style="border-color:var(--coming-border);color:var(--coming-label);">청도</span>
+      </div>
+      <span class="coming-label">— 개발 중</span>
+    </div>
+
+  </div>
+</section>
+
+<section class="about-section">
+  <div class="about-inner">
+    <div>
+      <div class="about-label">About</div>
+      <h2 class="about-title">청도혁신센터는<br>지역과 사람을 잇습니다</h2>
+      <p class="about-desc">
+        경상북도 청도군에 위치한 청도혁신센터는 지역 창업 생태계 조성과
+        주민 역량 강화를 위해 다양한 사업을 운영합니다.
+        CommonzHub는 그 활동을 디지털로 확장하는 플랫폼입니다.
+      </p>
+    </div>
+    <div class="about-info">
+      <div class="about-row">
+        <span class="about-key">기관</span>
+        <span class="about-val">경북시민재단 청도혁신센터</span>
+      </div>
+      <div class="about-row">
+        <span class="about-key">위치</span>
+        <span class="about-val">경상북도 청도군 청도읍 고수리 825-1</span>
+      </div>
+      <div class="about-row">
+        <span class="about-key">이메일</span>
+        <span class="about-val">
+          <a href="mailto:cheongdo.cmz@gmail.com">cheongdo.cmz@gmail.com</a>
+        </span>
+      </div>
+      <div class="about-row">
+        <span class="about-key">홈페이지</span>
+        <span class="about-val">
+          <a href="https://cmz054.kr" target="_blank" rel="noopener">cmz054.kr</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">CommonzHub</div>
+  <div class="footer-copy">© 2025 청도혁신센터 × 상상마루</div>
+</footer>
+
+<script>
+  const total = document.querySelectorAll('.site-card:not(.coming)').length;
+  document.getElementById('site-count').textContent = total + '개 서비스';
+</script>
+
+</body>
+</html>

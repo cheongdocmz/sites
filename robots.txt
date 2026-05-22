@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /consult/contact/
+Sitemap: https://commonzhub.kr/sitemap.xml
