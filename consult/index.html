@@ -67,7 +67,6 @@
 
   .hero {
     min-height: 70vh;
-    max-height: 750px;
     position: relative;
     display: flex; align-items: center; justify-content: center;
     padding-top: 64px;
@@ -77,8 +76,10 @@
     position: absolute; inset: 0;
     background-image: url('images_800x800/hero.webp');
     background-size: cover;
-    background-position: center 30%;
+    background-position: center center;
+    background-attachment: scroll;
     z-index: 0;
+    will-change: transform;
   }
   .hero-bg::after {
     content: '';
@@ -278,8 +279,12 @@
     position: relative;
     overflow: hidden;
   }
-  .card:hover { background: #F0F0F0; border-color: #CCCCCC; }
-  .card.open { background: #EFEFEF; border-color: #AAAAAA; }
+  .card:hover {
+    background: #F0F0F0; border-color: #888888;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  }
+  .card.open { background: #EFEFEF; border-color: #0A0A0A; transform: translateY(0); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 
   .card-avatar {
     width: 100%;
@@ -312,12 +317,22 @@
     font-family: var(--serif); font-size: 17px; font-weight: 700;
     color: #0A0A0A; letter-spacing: -0.01em; margin-bottom: 4px;
   }
-  .card-org { font-size: 11px; color: rgba(0,0,0,0.4); line-height: 1.5; margin-bottom: 12px; }
+  .card-org { font-size: 12px; color: #444444; font-weight: 500; line-height: 1.5; margin-bottom: 10px; }
   .card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
   .card-tag {
     font-size: 11px; padding: 3px 8px;
-    background: rgba(0,0,0,0.05); color: #444444;
-    border-radius: 2px; border: 1px solid rgba(0,0,0,0.1);
+    background: #444444; color: #FFFFFF;
+    border-radius: 2px; border: 1px solid #444444;
+  }
+  @keyframes ripple {
+    from { transform: scale(0); opacity: 0.18; }
+    to   { transform: scale(4); opacity: 0; }
+  }
+  .card-ripple {
+    position: absolute; border-radius: 50%;
+    width: 80px; height: 80px; background: #000;
+    pointer-events: none; transform: scale(0);
+    animation: ripple 0.5s ease-out forwards;
   }
   .card-arrow {
     position: absolute; bottom: 14px; right: 14px;
@@ -561,7 +576,7 @@
           <div class="stat-label">성장 가능성</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num">6</div>
+          <div class="stat-num">7</div>
           <div class="stat-label">컨설팅 분야</div>
         </div>
         <div class="stat-item">
@@ -575,10 +590,16 @@
           <span class="area-chip">세무·회계·노무</span>
           <span class="area-chip">법인 설립·사회적경제</span>
           <span class="area-chip">마케팅·콘텐츠</span>
-          <span class="area-chip">F&amp;B·유통</span>
-          <span class="area-chip">관광·숙박·문화</span>
+          <span class="area-chip">농식품·유통</span>
+          <span class="area-chip">F&amp;B·숙박</span>
+          <span class="area-chip">관광·문화</span>
           <span class="area-chip">교육·돌봄</span>
         </div>
+      </div>
+      <div style="margin-top: 28px; padding-top: 24px; border-top: 1px solid rgba(0,0,0,0.08);">
+        <a class="hero-cta" href="contact/" style="width: 100%; justify-content: center; background: #0A0A0A;">
+          컨설팅 신청하기 <span class="hero-cta-arrow">→</span>
+        </a>
       </div>
     </div>
   </div>
@@ -634,7 +655,7 @@
     <button class="filter-btn active" data-filter="전체">전체</button>
     <button class="filter-btn" data-filter="세무·회계·노무">세무·회계·노무</button>
     <button class="filter-btn" data-filter="법인 설립·사회적경제">법인 설립·사회적경제</button>
-    <button class="filter-btn" data-filter="투자·제안서 작성">투자·제안서 작성(IP)</button>
+    <button class="filter-btn" data-filter="투자·제안서작성">투자·제안서작성</button>
     <button class="filter-btn" data-filter="마케팅·콘텐츠">마케팅·콘텐츠</button>
     <button class="filter-btn" data-filter="농식품·유통">농식품·유통</button>
     <button class="filter-btn" data-filter="F&B·숙박">F&amp;B·숙박</button>
@@ -977,19 +998,24 @@ function renderCards(list) {
       </div>
       <div class="card-inner">
         <div class="card-name">${c.name}</div>
-        <div class="card-org">${orgLines[0]}</div>
+        <div class="card-org">${(c.career && c.career.find(function(l){ return /^현\)/.test(l); })) || orgLines[0]}</div>
         <div class="card-tags">
           ${c.keywords.map(k => `<span class="card-tag">${k}</span>`).join('')}
         </div>
         <span class="card-arrow">›</span>
       </div>
       <div class="card-panel" id="panel-${c.id}">
-        ${c.career && c.career.length ? `
-        <div class="panel-section-label">경력</div>
-        <div class="panel-career">
-          ${c.career.map(l => `<p>${l.replace(/^(현|전)\)\s*/, '<span class="panel-career-prefix">$1)</span> ')}</p>`).join('')}
-        </div>
-        ` : ''}
+        ${c.career && c.career.length ? (
+          '<div class="panel-section-label">경력</div>' +
+          '<div class="panel-career">' +
+          c.career.map(function(l) {
+            var line = l.replace(/^(현|전)\)\s*/, function(m, p1) {
+              return '<span class="panel-career-prefix">' + p1 + ')</span> ';
+            });
+            return '<p>' + line + '</p>';
+          }).join('') +
+          '</div>'
+        ) : ''}
       </div>
     `;
 
@@ -997,7 +1023,7 @@ function renderCards(list) {
     const placeholder = el.querySelector('.photo-placeholder');
     setupCardImage(img, placeholder);
 
-    el.addEventListener('click', () => toggleCard(el, c.id));
+    el.addEventListener('click', function(e) { toggleCard(el, c.id, e); });
     grid.appendChild(el);
   });
 
@@ -1012,7 +1038,17 @@ function renderCards(list) {
   document.getElementById('pagination').style.display = totalPages <= 1 ? 'none' : 'flex';
 }
 
-function toggleCard(el, id) {
+function toggleCard(el, id, event) {
+  // ripple
+  if (event) {
+    var rect = el.getBoundingClientRect();
+    var r = document.createElement('span');
+    r.className = 'card-ripple';
+    r.style.left = (event.clientX - rect.left - 40) + 'px';
+    r.style.top  = (event.clientY - rect.top  - 40) + 'px';
+    el.appendChild(r);
+    setTimeout(function() { r.remove(); }, 500);
+  }
   const panel = document.getElementById('panel-' + id);
   const isOpen = el.classList.contains('open');
   document.querySelectorAll('.card.open').forEach(c => {
