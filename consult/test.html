@@ -67,7 +67,6 @@
 
   .hero {
     min-height: 70vh;
-    max-height: 750px;
     position: relative;
     display: flex; align-items: center; justify-content: center;
     padding-top: 64px;
@@ -77,8 +76,10 @@
     position: absolute; inset: 0;
     background-image: url('images_800x800/hero.webp');
     background-size: cover;
-    background-position: center 30%;
+    background-position: center center;
+    background-attachment: scroll;
     z-index: 0;
+    will-change: transform;
   }
   .hero-bg::after {
     content: '';
@@ -575,7 +576,7 @@
           <div class="stat-label">성장 가능성</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num">6</div>
+          <div class="stat-num">7</div>
           <div class="stat-label">컨설팅 분야</div>
         </div>
         <div class="stat-item">
@@ -589,10 +590,16 @@
           <span class="area-chip">세무·회계·노무</span>
           <span class="area-chip">법인 설립·사회적경제</span>
           <span class="area-chip">마케팅·콘텐츠</span>
-          <span class="area-chip">F&amp;B·유통</span>
-          <span class="area-chip">관광·숙박·문화</span>
+          <span class="area-chip">농식품·유통</span>
+          <span class="area-chip">F&amp;B·숙박</span>
+          <span class="area-chip">관광·문화</span>
           <span class="area-chip">교육·돌봄</span>
         </div>
+      </div>
+      <div style="margin-top: 28px; padding-top: 24px; border-top: 1px solid rgba(0,0,0,0.08);">
+        <a class="hero-cta" href="contact/" style="width: 100%; justify-content: center; background: #0A0A0A;">
+          컨설팅 신청하기 <span class="hero-cta-arrow">→</span>
+        </a>
       </div>
     </div>
   </div>
@@ -648,7 +655,7 @@
     <button class="filter-btn active" data-filter="전체">전체</button>
     <button class="filter-btn" data-filter="세무·회계·노무">세무·회계·노무</button>
     <button class="filter-btn" data-filter="법인 설립·사회적경제">법인 설립·사회적경제</button>
-    <button class="filter-btn" data-filter="투자·제안서 작성">투자·제안서 작성(IP)</button>
+    <button class="filter-btn" data-filter="투자·제안서작성">투자·제안서작성</button>
     <button class="filter-btn" data-filter="마케팅·콘텐츠">마케팅·콘텐츠</button>
     <button class="filter-btn" data-filter="농식품·유통">농식품·유통</button>
     <button class="filter-btn" data-filter="F&B·숙박">F&amp;B·숙박</button>
