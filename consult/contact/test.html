@@ -357,7 +357,55 @@
 </footer>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzL2oq7RQ_kkFTFr9l5VGeQfYX3SMkSFKZTVy4hWh-T4osSBMXfdjzCQLrBrUbGHS_W/exec'; 
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzL2oq7RQ_kkFTFr9l5VGeQfYX3SMkSFKZTVy4hWh-T4osSBMXfdjzCQLrBrUbGHS_W/exec';
+
+/* ── 컨설턴트 데이터 (JSON fetch) ── */
+let CONSULTANTS = [];
+
+fetch('../consultants.json')
+  .then(function (res) {
+    if (!res.ok) throw new Error('consultants.json 로드 실패');
+    return res.json();
+  })
+  .then(function (data) {
+    CONSULTANTS = data;
+  })
+  .catch(function (err) {
+    console.error('[컨설턴트 로드 오류]', err);
+  });
+
+/* ── 분야 선택 시 컨설턴트 목록 갱신 ── */
+function updateConsultants(selected) {
+  const sel     = document.getElementById('consultant');
+  const matched = CONSULTANTS.filter(c => c.categories.includes(selected));
+
+  sel.innerHTML = '';
+
+  if (!selected || matched.length === 0) {
+    sel.disabled = true;
+    sel.innerHTML = '<option value="">' +
+      (selected ? '해당 분야 컨설턴트가 없습니다' : '컨설팅 분야를 먼저 선택해주세요') +
+      '</option>';
+    return;
+  }
+
+  sel.disabled = false;
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = '선택해주세요 (선택 안 해도 됩니다)';
+  sel.appendChild(placeholder);
+
+  matched.forEach(function (c) {
+    const opt = document.createElement('option');
+    opt.value = c.name;
+    opt.textContent = c.name + ' · ' + c.org;
+    sel.appendChild(opt);
+  });
+}
+
+document.getElementById('field').addEventListener('change', function () {
+  updateConsultants(this.value);
+});
 /* ── 전화번호 포맷 ── */
 function formatTel(input) {
   let v = input.value.replace(/[^0-9]/g, '');
