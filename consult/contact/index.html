@@ -267,7 +267,7 @@
           <option value="">선택해주세요</option>
           <option>세무·회계·노무</option>
           <option>법인 설립·사회적경제</option>
-          <option>지식재산</option>
+          <option>투자·제안서작성</option>
           <option>마케팅·콘텐츠</option>
           <option>농식품·유통</option>
           <option>F&amp;B·숙박</option>
@@ -289,11 +289,28 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="consultant">희망 컨설턴트 <span class="label-optional">(선택)</span></label>
-      <select id="consultant" disabled>
-        <option value="">컨설팅 분야를 먼저 선택해주세요</option>
-      </select>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="consultant">희망 컨설턴트 <span class="label-optional">(선택)</span></label>
+        <select id="consultant" disabled>
+          <option value="">컨설팅 분야를 먼저 선택해주세요</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="biz-type">사업자 형태 <span class="label-optional">(선택)</span></label>
+        <select id="biz-type">
+          <option value="">선택해주세요</option>
+          <option>개인사업자</option>
+          <option>법인사업자</option>
+          <option>협동조합</option>
+          <option>사회적기업</option>
+          <option>마을기업</option>
+          <option>자활기업</option>
+          <option>비영리단체 / 사단법인</option>
+          <option>예비창업자 (미등록)</option>
+          <option>기타</option>
+        </select>
+      </div>
     </div>
 
     <!-- 문의 내용 -->
@@ -340,7 +357,55 @@
 </footer>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz883GOa8VVieFC3W_NvixPBn_etgU27aEXVvnAp0fLtVK-864KfuLzrLDtKp6xtq8/exec'; 
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzL2oq7RQ_kkFTFr9l5VGeQfYX3SMkSFKZTVy4hWh-T4osSBMXfdjzCQLrBrUbGHS_W/exec';
+
+/* ── 컨설턴트 데이터 (JSON fetch) ── */
+let CONSULTANTS = [];
+
+fetch('../consultants.json')
+  .then(function (res) {
+    if (!res.ok) throw new Error('consultants.json 로드 실패');
+    return res.json();
+  })
+  .then(function (data) {
+    CONSULTANTS = data;
+  })
+  .catch(function (err) {
+    console.error('[컨설턴트 로드 오류]', err);
+  });
+
+/* ── 분야 선택 시 컨설턴트 목록 갱신 ── */
+function updateConsultants(selected) {
+  const sel     = document.getElementById('consultant');
+  const matched = CONSULTANTS.filter(c => c.categories.includes(selected));
+
+  sel.innerHTML = '';
+
+  if (!selected || matched.length === 0) {
+    sel.disabled = true;
+    sel.innerHTML = '<option value="">' +
+      (selected ? '해당 분야 컨설턴트가 없습니다' : '컨설팅 분야를 먼저 선택해주세요') +
+      '</option>';
+    return;
+  }
+
+  sel.disabled = false;
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = '선택해주세요 (선택 안 해도 됩니다)';
+  sel.appendChild(placeholder);
+
+  matched.forEach(function (c) {
+    const opt = document.createElement('option');
+    opt.value = c.name;
+    opt.textContent = c.name + ' · ' + c.org;
+    sel.appendChild(opt);
+  });
+}
+
+document.getElementById('field').addEventListener('change', function () {
+  updateConsultants(this.value);
+});
 /* ── 전화번호 포맷 ── */
 function formatTel(input) {
   let v = input.value.replace(/[^0-9]/g, '');
@@ -425,13 +490,15 @@ function submitForm() {
   }
 
   const fields = {
-    name    : document.getElementById('name').value.trim(),
-    tel     : document.getElementById('tel').value.trim(),
-    email   : document.getElementById('email').value.trim(),
-    org     : document.getElementById('org').value.trim(),
-    field   : document.getElementById('field').value,
-    stage   : document.getElementById('stage').value,
-    message : document.getElementById('message').value.trim(),
+    name       : document.getElementById('name').value.trim(),
+    tel        : document.getElementById('tel').value.trim(),
+    email      : document.getElementById('email').value.trim(),
+    org        : document.getElementById('org').value.trim(),
+    field      : document.getElementById('field').value,
+    stage      : document.getElementById('stage').value,
+    consultant : document.getElementById('consultant').value,
+    bizType    : document.getElementById('biz-type').value,
+    message    : document.getElementById('message').value.trim(),
   };
 
   const err = validate(fields);
