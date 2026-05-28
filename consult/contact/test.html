@@ -289,22 +289,22 @@
       </div>
     </div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label for="consultant">희망 컨설턴트 <span class="label-optional">(선택)</span></label>
-        <select id="consultant" disabled>
-          <option value="">컨설팅 분야를 먼저 선택해주세요</option>
-        </select>
-      </div>
-      <div class="form-group">
-            <label for="biz-type">사업자 형태 <span class="label-optional">(선택)</span></label>
-            <textarea
-                id="biz-type"
-                placeholder="예) 개인사업자, 임의단체, 주식회사, 유한회사, 협동조합, 사회적협동조합, 농업회사법인, 영농조합법인, 사단법인, 사회적기업, 마을기업, 예비창업자 등&#10;&#10;해당하는 형태를 적거나, 다른 형태라면 직접 써주세요."
-                style="min-height: 80px; resize: vertical;"   
-            ></textarea>
-        </div>
+
+    <div class="form-group">
+    <label for="consultant">희망 컨설턴트 <span class="label-optional">(선택)</span></label>
+    <select id="consultant" disabled>
+        <option value="">컨설팅 분야를 먼저 선택해주세요</option>
+    </select>
     </div>
+    <div class="form-group">
+        <label for="biz-type">사업자 형태 <span class="label-optional">(선택)</span></label>
+        <textarea
+            id="biz-type"
+            placeholder="예) 개인사업자, 임의단체, 주식회사, 유한회사, 협동조합, 사회적협동조합, 농업회사법인, 영농조합법인, 사단법인, 사회적기업, 마을기업, 예비창업자 등&#10;&#10;해당하는 형태를 적거나, 다른 형태라면 직접 써주세요."
+            style="min-height: 80px; resize: vertical;"   
+        ></textarea>
+    </div>
+
 
     <!-- 문의 내용 -->
     <div class="form-section-label">문의 내용</div>
@@ -386,7 +386,7 @@ function updateConsultants(selected) {
   sel.disabled = false;
   const placeholder = document.createElement('option');
   placeholder.value = '';
-  placeholder.textContent = '선택해주세요 (선택 안 해도 됩니다)';
+  placeholder.textContent = '선택해주세요 (희망 시)';
   sel.appendChild(placeholder);
 
   matched.forEach(function (c) {
