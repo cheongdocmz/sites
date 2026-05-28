@@ -13,9 +13,9 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- hubook -->
+  <!-- innovators -->
   <url>
-    <loc>https://commonzhub.kr/hubook/</loc>
+    <loc>https://commonzhub.kr/innovators/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
