@@ -29,7 +29,6 @@
     min-height: 100vh;
   }
 
-  /* ── 네비게이션 ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
@@ -52,7 +51,6 @@
   }
   .nav-back:hover { color: var(--earth); }
 
-  /* ── 페이지 레이아웃 ── */
   .page-wrap {
     max-width: 680px;
     margin: 0 auto;
@@ -73,7 +71,6 @@
     margin-bottom: 48px;
   }
 
-  /* ── 폼 ── */
   .form-card {
     background: #FFFFFF;
     border: 1px solid var(--mist);
@@ -147,7 +144,6 @@
     line-height: 1.7;
   }
 
-  /* 제출 버튼 */
   .form-footer {
     margin-top: 32px;
     display: flex; align-items: center; justify-content: space-between;
@@ -167,7 +163,6 @@
   }
   .submit-btn:hover { background: #333333; transform: translateY(-1px); }
 
-  /* 완료 메시지 */
   .success-msg {
     display: none;
     background: #FFFFFF; border: 1px solid var(--mist);
@@ -289,7 +284,6 @@
       </div>
     </div>
 
-
     <div class="form-group">
     <label for="consultant">희망 컨설턴트 <span class="label-optional">(선택)</span></label>
     <select id="consultant" disabled>
@@ -305,8 +299,6 @@
         ></textarea>
     </div>
 
-
-    <!-- 문의 내용 -->
     <div class="form-section-label">문의 내용</div>
 
     <div class="form-group">
@@ -314,7 +306,6 @@
       <textarea id="message" placeholder="현재 상황, 컨설팅이 필요한 이유, 궁금한 점 등을 자세하게 작성해 주세요." required style="min-height: 120px;"></textarea>
     </div>
 
-<!-- 수정 후 -->
     <input type="text" id="hp-name" name="hp-name"
         style="display:none;visibility:hidden;position:absolute;left:-9999px;opacity:0;pointer-events:none;"
         tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -332,7 +323,6 @@
 
   </div>
 
-  <!-- 완료 메시지 (mailto 실행 후 표시) -->
   <div class="success-msg" id="success-msg">
     <div class="success-icon">✉</div>
     <div class="success-title">메일이 전송되었습니다</div>
@@ -430,10 +420,8 @@ function setRateStamp() {
   sessionStorage.setItem(RATE_KEY, String(Date.now()));
 }
 
-/* ── 이중 제출 방지 플래그 ── */
 let _submitting = false;
 
-/* ── 버튼 상태 토글 ── */
 function setBtnState(loading) {
   const btn = document.getElementById('submit-btn');
   btn.disabled = loading;
@@ -441,7 +429,6 @@ function setBtnState(loading) {
   document.getElementById('btn-loading').style.display = loading ? 'inline' : 'none';
 }
 
-/* ── 입력값 검증 ── */
 function validate(fields) {
   const { name, tel, email, org, message } = fields;
 
@@ -465,19 +452,14 @@ function validate(fields) {
   return null; // 통과
 }
 
-/* ── 폼 제출 ── */
 function submitForm() {
-  // 이중 제출 방지
   if (_submitting) return;
-
-  // honeypot 검사: 값이 있으면 봇으로 판단, 조용히 차단
   if (document.getElementById('hp-name').value) {
     document.getElementById('form-card').style.display = 'none';
     document.getElementById('success-msg').classList.add('show');
     return;
   }
 
-  // 클라이언트 Rate Limit
   if (isRateLimited()) {
     alert('잠시 후 다시 시도해주세요. (60초에 1회 제출 가능)');
     return;
