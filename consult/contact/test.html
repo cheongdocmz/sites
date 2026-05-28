@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>문의하기 — 청도혁신센터 × 상상마루</title>
-<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -267,7 +267,7 @@
           <option value="">선택해주세요</option>
           <option>세무·회계·노무</option>
           <option>법인 설립·사회적경제</option>
-          <option>지식재산</option>
+          <option>투자·제안서작성</option>
           <option>마케팅·콘텐츠</option>
           <option>농식품·유통</option>
           <option>F&amp;B·숙박</option>
@@ -321,9 +321,10 @@
       <textarea id="message" placeholder="현재 상황, 컨설팅이 필요한 이유, 궁금한 점 등을 자세하게 작성해 주세요." required></textarea>
     </div>
 
+<!-- 수정 후 -->
     <input type="text" id="hp-name" name="hp-name"
-           style="position:absolute;left:-9999px;opacity:0;pointer-events:none;"
-           tabindex="-1" autocomplete="off" aria-hidden="true">
+        style="display:none;visibility:hidden;position:absolute;left:-9999px;opacity:0;pointer-events:none;"
+        tabindex="-1" autocomplete="off" aria-hidden="true">
 
     <div class="form-footer">
       <p class="form-notice">
@@ -357,7 +358,7 @@
 </footer>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzL2oq7RQ_kkFTFr9l5VGeQfYX3SMkSFKZTVy4hWh-T4osSBMXfdjzCQLrBrUbGHS_W/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxQTvoq8DzEpu-Bc6MD-IfnUUF4Veg02bJCmMEkFrG95Ky5CmekOoC69cK_pBjc0ZMN/exec';
 
 /* ── 컨설턴트 데이터 (JSON fetch) ── */
 let CONSULTANTS = [];
@@ -499,6 +500,7 @@ function submitForm() {
     consultant : document.getElementById('consultant').value,
     bizType    : document.getElementById('biz-type').value,
     message    : document.getElementById('message').value.trim(),
+    'hp-name'  : document.getElementById('hp-name').value,
   };
 
   const err = validate(fields);
