@@ -1,0 +1,22 @@
+{
+  "site": {
+    "baseUrl": "https://commonzhub.kr",
+    "siteName": "CommonzHub",
+    "ogLocale": "ko_KR",
+    "defaultOgImage": "/images_800x800/og-default.webp"
+  },
+  "pages": {
+    "index": {
+      "path": "/",
+      "title": "CommonzHub — 청도혁신센터 디지털 플랫폼",
+      "description": "청도혁신센터가 운영하는 디지털 서비스 모음. 컨설팅, 지역혁신가 아카이브 등 다양한 서비스를 만나보세요.",
+      "ogImage": "/images_800x800/hero.webp"
+    },
+    "consult": {
+      "path": "/consult/",
+      "title": "청도혁신센터 상상마루 컨설팅",
+      "description": "청도 지역 창업·경영·마케팅 컨설팅 신청 페이지",
+      "ogImage": "/consult/images_800x800/hero.webp"
+    }
+  }
+}
