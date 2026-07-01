@@ -351,8 +351,6 @@
 </footer>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxQTvoq8DzEpu-Bc6MD-IfnUUF4Veg02bJCmMEkFrG95Ky5CmekOoC69cK_pBjc0ZMN/exec';
-
 /* ── 컨설턴트 데이터 (JSON fetch) ── */
 let CONSULTANTS = [];
 
@@ -502,13 +500,13 @@ function submitForm() {
   _submitting = true;
   setBtnState(true);
 
-  fetch(SCRIPT_URL, {
+  fetch('/api/contact', {
     method  : 'POST',
-    mode    : 'no-cors',
     headers : { 'Content-Type': 'application/json' },
     body    : JSON.stringify(fields),
   })
-  .then(function() {
+  .then(function(res) {
+    if (!res.ok) throw new Error('제출 실패');
     setRateStamp();
     document.getElementById('form-card').style.display = 'none';
     document.getElementById('success-msg').classList.add('show');
