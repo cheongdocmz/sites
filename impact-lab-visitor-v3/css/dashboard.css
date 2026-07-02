@@ -1,0 +1,113 @@
+/* ============================================================
+   dashboard.css — 카페 이용 현황 대시보드 전용 스타일
+   색상/간격 토큰은 style.css의 :root 변수를 그대로 재사용한다.
+============================================================ */
+
+.dash-container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+}
+
+.dash-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.dash-summary {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.dash-refresh-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--primary-color);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+}
+.dash-refresh-btn:hover { background: #eff6ff; }
+.dash-refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.dash-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dash-empty, .dash-error {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 24px 18px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.dash-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.1s;
+}
+.dash-card:active { transform: scale(0.99); }
+.dash-card.filled { border-color: #bbf7d0; background: #f8fffb; }
+
+.dash-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.dash-card-org {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.dash-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.dash-badge.pending { background: #fef3c7; color: #92400e; }
+.dash-badge.filled  { background: #d1fae5; color: #065f46; }
+
+.dash-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+.dash-card-meta span { display: inline-flex; align-items: center; }
+.dash-card-menu {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.dash-modal-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 4px;
+}
+.dash-modal-sub {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 18px;
+}

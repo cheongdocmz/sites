@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>임팩트랩 방문 기록 등록</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+
+<header class="page-header">
+  <div class="org-name">청도혁신센터 임팩트랩</div>
+  <h1>방문 기록 등록</h1>
+</header>
+
+<!-- 담당자 자동 인식 배너 -->
+<div class="returning-banner" id="returningBanner">
+  <div class="returning-banner-top">
+    <span class="returning-badge">담당자</span>
+    <span class="returning-name" id="returningName"></span>
+  </div>
+  <div class="returning-desc">저장된 담당자 정보가 자동으로 입력되었습니다.</div>
+  <div class="banner-actions">
+    <button class="btn-edit-info" onclick="enableEditMode()">정보 수정하기</button>
+    <button class="btn-clear-info" onclick="clearSavedInfo()">저장 정보 삭제</button>
+  </div>
+</div>
+
+<div class="form-container">
+
+  <!-- ============================================================
+       [보안] Honeypot 필드
+  ============================================================ -->
+  <div class="hp-field" aria-hidden="true">
+    <label for="website">Website</label>
+    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+  </div>
+
+  <!-- 1. 담당자 정보 -->
+  <div class="form-section">
+    <div class="section-title">담당자 정보</div>
+
+    <div class="form-group">
+      <label for="staffEmail" class="required">담당자 이메일</label>
+      <input type="email" id="staffEmail" class="form-input" placeholder="예: hong@gbcommons.org"
+             maxlength="60" oninput="clearError('staffEmail')">
+      <div class="error-message" id="staffEmailError">@gbcommons.org 형식의 이메일을 입력해주세요</div>
+    </div>
+
+    <div class="form-group">
+      <label for="staffName" class="required">담당자 이름</label>
+      <input type="text" id="staffName" class="form-input" placeholder="이름을 입력해주세요"
+             maxlength="20" oninput="clearError('staffName')">
+      <div class="error-message" id="staffNameError">담당자 이름을 2자 이상 입력해주세요</div>
+    </div>
+  </div>
+
+  <!-- 2. 방문 정보 -->
+  <div class="form-section">
+    <div class="section-title">방문 정보</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="visitMonth" class="required">방문 월</label>
+        <select id="visitMonth" class="form-input" onchange="updateDayOptions(this.value); clearError('visitMonth')">
+          <option value="">월 선택</option>
+        </select>
+        <div class="error-message" id="visitMonthError">방문 월을 선택해주세요</div>
+      </div>
+      <div class="form-group">
+        <label for="visitDay" class="required">방문 일</label>
+        <select id="visitDay" class="form-input" onchange="clearError('visitDay')">
+          <option value="">일 선택</option>
+        </select>
+        <div class="error-message" id="visitDayError">방문 일을 선택해주세요</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="visitTime" class="required">방문 시간</label>
+      <select id="visitTime" class="form-input" onchange="clearError('visitTime')">
+        <option value="">시간 선택</option>
+      </select>
+      <div class="error-message" id="visitTimeError">방문 시간을 선택해주세요</div>
+    </div>
+
+    <div class="form-group">
+      <label for="visitPurpose" class="required">방문 목적</label>
+      <select id="visitPurpose" class="form-input" onchange="clearError('visitPurpose')">
+        <option value="">목적 선택</option>
+      </select>
+      <div class="error-message" id="visitPurposeError">방문 목적을 선택해주세요</div>
+    </div>
+
+    <div class="form-group">
+      <label for="orgName" class="required">방문 기관/업체명</label>
+      <input type="text" id="orgName" class="form-input" placeholder="예: 청도혁신센터, ㈜예시"
+             maxlength="40" oninput="clearError('orgName')">
+      <div class="error-message" id="orgNameError">방문 기관/업체명을 입력해주세요</div>
+    </div>
+
+    <div class="form-group">
+      <label class="required">청도군내 기관/업체 여부</label>
+      <div class="radio-group" id="inCheongdoGroup">
+        <label class="radio-pill" data-group="inCheongdo" onclick="event.preventDefault(); selectRadioPill('inCheongdo','청도군내')">
+          <input type="radio" name="inCheongdo" value="청도군내">청도군내
+        </label>
+        <label class="radio-pill" data-group="inCheongdo" onclick="event.preventDefault(); selectRadioPill('inCheongdo','청도군외')">
+          <input type="radio" name="inCheongdo" value="청도군외">청도군외
+        </label>
+      </div>
+      <div class="error-message" id="inCheongdoGroupError">청도군내 여부를 선택해주세요</div>
+    </div>
+
+    <div class="form-group">
+      <label for="visitorCount" class="required">방문 인원수</label>
+      <div class="stepper-input">
+        <button type="button" class="stepper-btn" onclick="stepCount('visitorCount',-1)" aria-label="인원 감소">−</button>
+        <input type="number" id="visitorCount" class="form-input" value="1" min="1"
+               oninput="clearError('visitorCount')">
+        <button type="button" class="stepper-btn" onclick="stepCount('visitorCount',1)" aria-label="인원 증가">+</button>
+      </div>
+      <div class="error-message" id="visitorCountError">방문 인원수를 입력해주세요</div>
+    </div>
+  </div>
+
+  <!-- 3. 카페 이용 (방문 목적과 무관한 독립 항목) -->
+  <div class="form-section">
+    <div class="section-title">카페 이용</div>
+    <div class="cafe-toggle-row" onclick="toggleCafeUsage()">
+      <div class="consent-checkbox-area" id="cafeToggleBox">
+        <svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+          <path d="M1.5 5L5 8.5L11.5 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="cafe-toggle-label">카페를 이용하시나요?</div>
+        <div class="cafe-toggle-desc">방문 목적과 상관없이 체크해주세요</div>
+      </div>
+    </div>
+    <input type="checkbox" id="cafeUsage" style="display:none">
+
+    <div class="conditional-field" id="cafeDetailGroup">
+      <div class="form-group">
+        <label for="cafeCount">카페 이용 인원수</label>
+        <div class="stepper-input">
+          <button type="button" class="stepper-btn" onclick="stepCount('cafeCount',-1)" aria-label="카페 이용 인원 감소">−</button>
+          <input type="number" id="cafeCount" class="form-input" min="1"
+                 oninput="clearError('cafeCount')">
+          <button type="button" class="stepper-btn" onclick="stepCount('cafeCount',1)" aria-label="카페 이용 인원 증가">+</button>
+        </div>
+        <div class="error-message" id="cafeCountError">카페 이용 인원수를 입력해주세요</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 추가 정보 -->
+  <div class="form-section">
+    <div class="section-title">추가 정보</div>
+    <div class="form-group">
+      <label for="memo">비고 <span style="font-weight:400;color:var(--text-secondary)">(선택)</span></label>
+      <textarea id="memo" class="form-input" placeholder="추가 전달 사항이 있으면 입력해주세요" maxlength="200" rows="3"></textarea>
+      <div style="text-align:right;font-size:11px;color:var(--text-secondary);margin-top:4px">
+        <span id="memoCount">0</span>/200
+      </div>
+    </div>
+  </div>
+
+  <!-- 제출 버튼 -->
+  <div class="submit-wrap">
+    <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">방문 기록 저장하기</button>
+  </div>
+
+</div><!-- /form-container -->
+
+<!-- 로딩 오버레이 -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-card">
+    <div class="spinner"></div>
+    <div class="loading-text">저장 중입니다...</div>
+  </div>
+</div>
+
+<!-- 성공 오버레이 -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
+    <div class="success-title">저장 완료!</div>
+    <div class="success-desc">방문 기록이 저장되었습니다.</div>
+    <div class="visitor-code-box">
+      <div class="visitor-code-label">등록 코드</div>
+      <div class="visitor-code-value" id="recordCodeDisplay">V---------</div>
+    </div>
+    <button class="btn-continue" onclick="resetAfterSuccess()">확인</button>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/validation.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/form.js"></script>
+</body>
+</html>

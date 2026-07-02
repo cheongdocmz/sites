@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>카페 이용 현황 대시보드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+
+<header class="page-header">
+  <div class="org-name">청도혁신센터 임팩트랩</div>
+  <h1>카페 이용 현황</h1>
+</header>
+
+<div class="dash-container">
+
+  <div class="dash-toolbar">
+    <div class="dash-summary" id="dashSummary">불러오는 중...</div>
+    <button class="dash-refresh-btn" id="refreshBtn" onclick="loadRequests()">새로고침</button>
+  </div>
+
+  <div class="dash-list" id="dashList"></div>
+
+</div><!-- /dash-container -->
+
+<!-- 메뉴 입력 모달 -->
+<div class="welcome-modal-overlay" id="menuModalOverlay">
+  <div class="welcome-modal-card">
+    <div class="welcome-handle"></div>
+    <div class="dash-modal-title" id="menuModalTitle">이용 메뉴 입력</div>
+    <div class="dash-modal-sub" id="menuModalSub"></div>
+
+    <div class="form-group">
+      <label id="dashMenuGroupLabel">이용 메뉴</label>
+      <div class="menu-chip-group" id="dashMenuChipGroup"></div>
+      <div class="error-message" id="dashMenuGroupError">이용하신 메뉴를 선택해주세요</div>
+    </div>
+
+    <div class="form-group">
+      <label for="dashCafeCount">카페 이용 인원수</label>
+      <div class="stepper-input">
+        <button type="button" class="stepper-btn" onclick="stepDashCount(-1)" aria-label="인원 감소">−</button>
+        <input type="number" id="dashCafeCount" class="form-input" min="1">
+        <button type="button" class="stepper-btn" onclick="stepDashCount(1)" aria-label="인원 증가">+</button>
+      </div>
+    </div>
+
+    <button class="welcome-btn-primary" id="menuModalSaveBtn" onclick="submitMenu()">저장</button>
+    <button class="welcome-btn-secondary" onclick="closeMenuModal()">닫기</button>
+  </div>
+</div>
+
+<script src="js/dashboard.js"></script>
+</body>
+</html>
